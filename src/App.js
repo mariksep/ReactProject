@@ -6,6 +6,8 @@ import {
   Route,
 } from 'react-router-dom';
 import Login from './views/Login';
+import Media from './views/Media';
+
 
 const App = () => {
   return (
@@ -13,7 +15,9 @@ const App = () => {
       <h1>MOI</h1>
       <Router>
         <Switch>
-          <Route path="/" component={Login}/>
+          <Route exact path="/" component={Login}/>
+          <Route path="/media" component={Media}/>
+
         </Switch>
       </Router>
     </>

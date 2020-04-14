@@ -2,8 +2,8 @@ import {useState} from 'react';
 
 const useLoginForm = (callback) => {
   const [inputs, setInputs]= useState({
-    username: 'kokeilu',
-    password: 'kokeilu',
+    username: '',
+    password: '',
   });
   const handlesbmit = (event)=>{
     if (event) {

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import LoginForm from '../components/loginForm';
-import RegisterForm from '../components/registerForm';
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
+
+{/* Kokeilin vaan miten css toimii reactin kanssa */}
 const button = {
   color: 'white',
   border: 'none',
