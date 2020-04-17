@@ -6,6 +6,7 @@ const Media = () => {
     <div>
       <h1> Media nappula kumpi row haetaan </h1>
       <MediaTable />
+      <button>uploadiin</button>
     </div>
   );
 };
