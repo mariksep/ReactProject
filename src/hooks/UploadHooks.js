@@ -6,12 +6,14 @@ const useUploadForm = (callback) => {
     description: '',
     file: null,
     dataUrl: '',
+    type: '',
   });
 
   const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
     }
+
     callback();
   };
 
@@ -36,10 +38,21 @@ const useUploadForm = (callback) => {
     });
   };
 
+  const handleRadioChange = (event) => {
+    event.persist();
+    setInputs((inputs) => {
+      return {
+        ...inputs,
+        type: event.target.value,
+      };
+    });
+  };
+
   return {
     handleSubmit,
     handleInputChange,
     handleFileChange,
+    handleRadioChange,
     inputs,
     setInputs,
   };
