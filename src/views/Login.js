@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
 
-{/* Kokeilin vaan miten css toimii reactin kanssa */}
+/* Kokeilin vaan miten css toimii reactin kanssa */
 const button = {
   color: 'white',
   border: 'none',
@@ -22,7 +22,8 @@ const Login = () => {
   return (
     <>
       <h1>Etusivu</h1>
-      <button style={button} onClick={showForms}>{show ? 'Login' : 'Register'} </button>
+      <button style={button} onClick={showForms}>{show ? 'Login' : 'Register'}
+      </button>
       {show ?
         <LoginForm/> :
         <RegisterForm/>

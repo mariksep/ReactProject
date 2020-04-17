@@ -1,9 +1,12 @@
 import {useState} from 'react';
 
-const useLoginForm = (callback) => {
+const useRegisterForm = (callback) => {
   const [inputs, setInputs]= useState({
     username: '',
     password: '',
+    confirm: '',
+    email: '',
+    full_name: '',
   });
   const handlesubmit = (event)=>{
     if (event) {
@@ -29,4 +32,4 @@ const useLoginForm = (callback) => {
   };
 };
 
-export default useLoginForm;
+export default useRegisterForm;
