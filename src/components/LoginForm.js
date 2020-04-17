@@ -4,12 +4,11 @@ import useLoginForm from '../hooks/LoginHooks';
 import {login} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {withRouter} from 'react-router-dom';
-
+import {TextField, Button} from '@material-ui/core/';
 
 const LoginForm =({history}) => {
   const [user, setUser] = useContext(MediaContext);
   const doLogin = async () =>{
-    console.log(user);
     try {
       // hakee käyttäjän tiedot Apihooksista
       const userData = await login(inputs);
@@ -21,7 +20,6 @@ const LoginForm =({history}) => {
       history.push('/media');
     } catch (e) {
       console.log(e.message);
-      alert(e.message);
       // throw new Error(e.message);
     }
   };
@@ -32,23 +30,29 @@ const LoginForm =({history}) => {
     <>
       <h1>Login</h1>
       <form onSubmit={handlesubmit}>
-        <input
+        <TextField
+          fullWidth
+          variant="outlined"
           onChange={handleInputChange}
           type='text'
           name='username'
           className='username'
-          placeholder="username"
+          label="username"
           value={inputs.username}
         />
-        <input
+        <TextField
+          fullWidth
+          variant="outlined"
           onChange={handleInputChange}
           type='password'
           name='password'
-          placeholder="password"
+          label="password"
           value={inputs.password}
 
         />
-        <button type="submit" >Login</button>
+        <Button
+          variant="outlined" size="large"
+          type="submit" >Login</Button>
       </form>
     </>
   );

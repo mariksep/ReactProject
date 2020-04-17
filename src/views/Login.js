@@ -1,17 +1,8 @@
 import React, {useState} from 'react';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
+import {Button} from '@material-ui/core/';
 
-/* Kokeilin vaan miten css toimii reactin kanssa */
-const button = {
-  color: 'white',
-  border: 'none',
-  backgroundColor: 'lightblue',
-  padding: '15px 32px',
-  borderRadius: '15px',
-  outline: 'none',
-
-};
 
 const Login = () => {
   const [show, setShow]= useState(true);
@@ -22,8 +13,10 @@ const Login = () => {
   return (
     <>
       <h1>Etusivu</h1>
-      <button style={button} onClick={showForms}>{show ? 'Login' : 'Register'}
-      </button>
+      <Button
+        variant="outlined" size="large"
+        onClick={showForms}>{show ? 'Login' : 'Register'}
+      </Button>
       {show ?
         <LoginForm/> :
         <RegisterForm/>
