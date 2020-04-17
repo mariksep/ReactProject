@@ -10,9 +10,10 @@ const register = async (inputs)=>{
     body: JSON.stringify(inputs),
   };
   try {
-    const resp = await fetch(baseUrl + 'login', fetchOptions);
+    const resp = await fetch(baseUrl + 'users', fetchOptions);
     const json = await resp.json();
     if (!resp.ok) throw new Error(json.message + ':' + json.error);
+    console.log(resp);
     return json;
   } catch (e) {
     throw new Error(e.message);
