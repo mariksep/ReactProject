@@ -9,6 +9,7 @@ import {withRouter} from 'react-router-dom';
 const LoginForm =({history}) => {
   const [user, setUser] = useContext(MediaContext);
   const doLogin = async () =>{
+    console.log(user);
     try {
       // hakee käyttäjän tiedot Apihooksista
       const userData = await login(inputs);
@@ -19,7 +20,9 @@ const LoginForm =({history}) => {
       // siirtyy media sivulle
       history.push('/media');
     } catch (e) {
-      throw new Error(e.message);
+      console.log(e.message);
+      alert(e.message);
+      // throw new Error(e.message);
     }
   };
 
@@ -53,6 +56,5 @@ const LoginForm =({history}) => {
 LoginForm.propTypes = {
   history: PropTypes.object,
 };
-
 
 export default withRouter(LoginForm);
