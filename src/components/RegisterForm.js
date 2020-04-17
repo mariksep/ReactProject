@@ -5,10 +5,11 @@ import {login, register} from '../hooks/ApiHooks';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {Button} from '@material-ui/core/';
+
 
 const RegisterForm = ({history}) => {
   const [user, setUser]= useContext(MediaContext);
-  console.log(user);
   const doRegister = async ()=>{
     try {
       delete inputs.confirm;
@@ -34,13 +35,14 @@ const RegisterForm = ({history}) => {
   const {inputs, handlesubmit,
     handleInputChange} = useRegisterForm(doRegister);
   useEffect(()=>{
-    ValidatorForm.addValidationRule('isMatch', (value)=>{
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       console.log(value);
-      if (value!== inputs.password) {
+      if (value !== inputs.password) {
         return false;
       }
       return true;
     });
+
 
     ValidatorForm.addValidationRule('isAvailable', async (value)=>{
       console.log(value);
@@ -54,6 +56,7 @@ const RegisterForm = ({history}) => {
       <ValidatorForm onSubmit={handlesubmit}>
 
         <TextValidator
+          fullWidth
           type='text'
           onChange={handleInputChange}
           name='username'
@@ -62,37 +65,66 @@ const RegisterForm = ({history}) => {
           validators={['minStringLength:3',
             'required',
             'isAvailable']}
-
-        />
-        <input
-          type='email'
-          onChange={handleInputChange}
-          name='email'
-          placeholder="email"/>
-        <input
-          type='password'
-          onChange={handleInputChange}
-          name='password'
-          placeholder="password"/>
-        <TextValidator
-          id="standard-password-input"
-          type='password'
-          onChange={handleInputChange}
-          variant="outlined"
-          name='confirm'git
-          label="confirm password"
-          validators={['isMatch', 'required']}
-          aria-errormessage='password mismatch and this field is required'
           errorMessages={['password mismatch',
             'this field is required']}
         />
-        <input
+        <TextValidator
+          fullWidth
+          type='email'
+          onChange={handleInputChange}
+          name='email'
+          label="email"
+          variant="outlined"
+
+          validators={['isEmail',
+            'required',
+          ]}
+          errorMessages={['Email is not valid',
+            'this field is required']}
+
+        />
+        <TextValidator
+          fullWidth
+          type='password'
+          onChange={handleInputChange}
+          name='password'
+          label="password"
+          variant="outlined"
+
+          validators={['minStringLength:5', 'required']}
+          errorMessages={['min length 5',
+            'this field is required']}
+        />
+        <TextValidator
+          fullWidth
+          type='password'
+          onChange={handleInputChange}
+          variant="outlined"
+          name='confirm'
+          label="confirm password"
+
+          validators={['isMatch', 'required']}
+          errorMessages={['password mismatch',
+            'this field is required']}
+        />
+        <TextValidator
+          fullWidth
           type='text'
           onChange={handleInputChange}
           name='full_name'
-          placeholder="full name"/>
+          label="full name"
+          variant="outlined"
 
-        <button type="submit">Submit</button>
+          validators={
+            ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
+          }
+          errorMessages={['Text only']}
+
+        />
+
+        <Button
+          variant="outlined" size="large"
+          type="submit">Submit</Button>
       </ValidatorForm>
     </>
   );
