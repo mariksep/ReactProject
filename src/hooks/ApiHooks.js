@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -53,4 +53,4 @@ const useMedia = () => {
   return data;
 };
 
-export { useMedia, login, register };
+export {useMedia, login, register};

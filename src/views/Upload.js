@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormControl,
 } from '@material-ui/core';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const Upload = () => {
   return (
@@ -52,7 +52,7 @@ const Upload = () => {
           label='Provide a more detailed description'
           name='description'
           validators={[
-            "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
+            'matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
           ]}
           errorMessages={['text only']}
         />

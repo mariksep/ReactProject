@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './views/Login';
 import Media from './views/Media';
 import Upload from './views/Upload';
-import { MediaProvider } from './contexts/MediaContext';
+import {MediaProvider} from './contexts/MediaContext';
 
 const App = () => {
   return (

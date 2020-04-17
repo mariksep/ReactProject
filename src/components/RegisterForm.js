@@ -4,7 +4,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import {login, register} from '../hooks/ApiHooks';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const RegisterForm = ({history}) => {
   const [user, setUser]= useContext(MediaContext);
@@ -33,17 +33,37 @@ const RegisterForm = ({history}) => {
 
   const {inputs, handlesubmit,
     handleInputChange} = useRegisterForm(doRegister);
+  useEffect(()=>{
+    ValidatorForm.addValidationRule('isMatch', (value)=>{
+      console.log(value);
+      if (value!== inputs.password) {
+        return false;
+      }
+      return true;
+    });
+
+    ValidatorForm.addValidationRule('isAvailable', async (value)=>{
+      console.log(value);
+    });
+  });
 
 
   return (
     <>
       <h1>Register</h1>
-      <form onSubmit={handlesubmit}>
-        <input
+      <ValidatorForm onSubmit={handlesubmit}>
+
+        <TextValidator
           type='text'
           onChange={handleInputChange}
           name='username'
-          placeholder="username"/>
+          label="username"
+          variant="outlined"
+          validators={['minStringLength:3',
+            'required',
+            'isAvailable']}
+
+        />
         <input
           type='email'
           onChange={handleInputChange}
@@ -54,11 +74,18 @@ const RegisterForm = ({history}) => {
           onChange={handleInputChange}
           name='password'
           placeholder="password"/>
-        <input
+        <TextValidator
+          id="standard-password-input"
           type='password'
           onChange={handleInputChange}
-          name='confirm'
-          placeholder="confirm password"/>
+          variant="outlined"
+          name='confirm'git
+          label="confirm password"
+          validators={['isMatch', 'required']}
+          aria-errormessage='password mismatch and this field is required'
+          errorMessages={['password mismatch',
+            'this field is required']}
+        />
         <input
           type='text'
           onChange={handleInputChange}
@@ -66,7 +93,7 @@ const RegisterForm = ({history}) => {
           placeholder="full name"/>
 
         <button type="submit">Submit</button>
-      </form>
+      </ValidatorForm>
     </>
   );
 };
