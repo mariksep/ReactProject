@@ -1,10 +1,10 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
-const useMedia =() =>{
-  const [data, setData]= useState([]);
-  const fetchUrl = async ()=> {
-    const resp = await fetch(baseUrl+'media');
+const useMedia = () => {
+  const [data, setData] = useState([]);
+  const fetchUrl = async () => {
+    const resp = await fetch(baseUrl + 'media');
     const json = await resp.json();
     console.log(json);
     setData(json);
@@ -15,7 +15,4 @@ const useMedia =() =>{
   return data;
 };
 
-
-export {
-  useMedia,
-};
+export { useMedia };
