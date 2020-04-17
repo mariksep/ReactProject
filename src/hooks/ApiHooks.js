@@ -1,7 +1,8 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
-const register = async (inputs)=>{
+const register = async (inputs) => {
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -20,7 +21,7 @@ const register = async (inputs)=>{
   }
 };
 
-const login = async (inputs)=>{
+const login = async (inputs) => {
   const fetchOptions = {
     method: 'POST',
     headers: {
@@ -38,11 +39,10 @@ const login = async (inputs)=>{
   }
 };
 
-
-const useMedia =() =>{
-  const [data, setData]= useState([]);
-  const fetchUrl = async ()=> {
-    const resp = await fetch(baseUrl+'media');
+const useMedia = () => {
+  const [data, setData] = useState([]);
+  const fetchUrl = async () => {
+    const resp = await fetch(baseUrl + 'media');
     const json = await resp.json();
     console.log(json);
     setData(json);
@@ -53,8 +53,4 @@ const useMedia =() =>{
   return data;
 };
 
-
-export {
-  useMedia, login,
-  register,
-};
+export { useMedia, login, register };
