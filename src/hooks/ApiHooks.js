@@ -54,7 +54,6 @@ const useMedia = () => {
 };
 
 const uploadFile = async (inputs, tag) => {
-  console.log('api hook up file', tag);
   const fd = new FormData();
   fd.append('title', inputs.title);
   fd.append('description', inputs.description);
@@ -83,7 +82,6 @@ const addTag = async (file_id, tag) => {
   const fetchOptionsTag = {
     method: 'POST',
     body: JSON.stringify({
-      // Propertyn nimi on sama kuin muuttujan nimi,ei tartte kirjoittaa tag:tag
       file_id,
       tag,
     }),
@@ -95,8 +93,7 @@ const addTag = async (file_id, tag) => {
 
   try {
     const tagResponse = await fetch(baseUrl + 'tags', fetchOptionsTag);
-    const tagJson = await tagResponse.json();
-    console.log('jsontag', tagJson);
+    await tagResponse.json();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -104,9 +101,9 @@ const addTag = async (file_id, tag) => {
 
 const useMediaByTag = (tag) => {
   const [data, setData] = useState([]);
-  const fetchUrl = async () => {
+  const fetchUrl = async (tagi) => {
     // Hae kaikki kuvat -> saadaan selville kuvan id
-    const response = await fetch(baseUrl + 'tags/' + tag);
+    const response = await fetch(baseUrl + 'tags/' + tagi);
     const json = await response.json();
     // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
     const items = await Promise.all(
@@ -119,8 +116,8 @@ const useMediaByTag = (tag) => {
   };
 
   useEffect(() => {
-    fetchUrl();
-  }, []);
+    fetchUrl(tag);
+  }, [tag]);
 
   return data;
 };

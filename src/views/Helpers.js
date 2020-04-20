@@ -5,7 +5,8 @@ import { Typography } from '@material-ui/core';
 import { useMediaByTag } from '../hooks/ApiHooks';
 
 const Helpers = (props) => {
-  const pics = useMediaByTag('nhahelper');
+  const posts = useMediaByTag('nhahelper');
+  console.log('helpers', posts);
 
   return (
     <>

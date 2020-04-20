@@ -7,14 +7,20 @@ const useUploadForm = (callback) => {
     file: null,
     dataUrl: '',
     type: '',
+    contact: '',
   });
 
   const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState('');
 
   const handleSubmit = (event) => {
     if (event) {
       if (inputs.type === '') {
         setError(true);
+        return false;
+      }
+      if (inputs.file === null) {
+        setHelperText('Remember to add file!');
         return false;
       }
       event.preventDefault();
@@ -35,7 +41,6 @@ const useUploadForm = (callback) => {
 
   const handleFileChange = (event) => {
     event.persist();
-    console.log('file up', event.target.files[0]);
     setInputs((inputs) => {
       return {
         ...inputs,
@@ -63,6 +68,8 @@ const useUploadForm = (callback) => {
     setInputs,
     error,
     setError,
+    helperText,
+    setHelperText,
   };
 };
 
