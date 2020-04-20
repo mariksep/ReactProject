@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
 const useUploadForm = (callback) => {
   const [inputs, setInputs] = useState({

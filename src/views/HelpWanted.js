@@ -6,7 +6,7 @@ import { useMediaByTag } from '../hooks/ApiHooks';
 
 const HelpWanted = (props) => {
   const picArray = useMediaByTag('nhaneedhelp');
-
+console.log(picArray);
   return (
     <>
       <BackButton />

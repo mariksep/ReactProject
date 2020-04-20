@@ -1,13 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import useRegisterForm from '../hooks/RegisterHooks';
-import { MediaContext } from '../contexts/MediaContext';
-import { login, register } from '../hooks/ApiHooks';
-import { withRouter } from 'react-router-dom';
+import {MediaContext} from '../contexts/MediaContext';
+import {login, register} from '../hooks/ApiHooks';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Button } from '@material-ui/core/';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {Button} from '@material-ui/core/';
 
-const RegisterForm = ({ history }) => {
+
+const RegisterForm = ({history}) => {
   const [user, setUser] = useContext(MediaContext);
   const doRegister = async () => {
     try {
@@ -30,9 +31,11 @@ const RegisterForm = ({ history }) => {
     }
   };
 
-  const { inputs, handlesubmit, handleInputChange } = useRegisterForm(
-    doRegister
-  );
+
+  const {inputs, handlesubmit,
+    handleInputChange} = useRegisterForm(doRegister);
+
+
   useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       console.log(value);
@@ -66,16 +69,37 @@ const RegisterForm = ({ history }) => {
           type='email'
           onChange={handleInputChange}
           name='email'
-          label='email'
+          placeholder='email'
+        />
+        <input
+          type='password'
+          onChange={handleInputChange}
+          name='password'
+          placeholder='password'
+        />
+        <TextValidator
+          id='standard-password-input'
+          type='password'
+          onChange={handleInputChange}
           variant='outlined'
-          validators={['isEmail', 'required']}
-          errorMessages={['Email is not valid', 'this field is required']}
+          name='confirm'
+
+          label='confirm password'
+          validators={[
+            'isMatch',
+            'required']}
+          aria-errormessage='password mismatch and this field is required'
+          errorMessages={[
+            'password mismatch',
+            'this field is required']}
+
         />
         <TextValidator
           fullWidth
           type='password'
           onChange={handleInputChange}
           name='password'
+
           label='password'
           variant='outlined'
           validators={['minStringLength:5', 'required']}
@@ -87,22 +111,21 @@ const RegisterForm = ({ history }) => {
           onChange={handleInputChange}
           variant='outlined'
           name='confirm'
-          label='confirm password'
+          label="confirm password"
           validators={['isMatch', 'required']}
-          errorMessages={['password mismatch', 'this field is required']}
+          errorMessages={[
+            'password mismatch',
+            'this field is required']}
+
         />
         <TextValidator
           fullWidth
           type='text'
           onChange={handleInputChange}
           name='full_name'
-          label='full name'
-          variant='outlined'
-          validators={[
-            "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
-          ]}
-          errorMessages={['Text only']}
+          placeholder='full name'
         />
+
 
         <Button variant='outlined' size='large' type='submit'>
           Submit
@@ -110,7 +133,9 @@ const RegisterForm = ({ history }) => {
       </ValidatorForm>
     </>
   );
-};
+}
+  ;
+
 
 RegisterForm.propTypes = {
   history: PropTypes.object,

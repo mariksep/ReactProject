@@ -7,6 +7,7 @@ import Upload from './views/Upload';
 import { MediaProvider } from './contexts/MediaContext';
 import Helpers from './views/Helpers';
 import HelpWanted from './views/HelpWanted';
+import Profile from './views/Profile';
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
             <Route path='/upload' component={Upload} />
             <Route path='/helpers' component={Helpers} />
             <Route path='/helpwanted' component={HelpWanted} />
+            <Route path='/profile' component={Profile} />
+
           </Switch>
         </MediaProvider>
       </Router>

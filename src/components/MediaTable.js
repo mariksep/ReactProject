@@ -1,19 +1,27 @@
 import React from 'react';
-import {useMedia} from '../hooks/ApiHooks';
+import {useMediaByTag} from '../hooks/ApiHooks';
+const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const MediaTable = () => {
-  const kokeilu= useMedia();
+
+const MediaTable = ()=> {
+
+  const mediaHelper = useMediaByTag('nhahelper');
+  const medianeedHelp = useMediaByTag('nhaneedhelp');
+
+
   return (
-    <div>
-      {/* Tähän erillinen komponentti vielä
-      median haulle kubnhan tietää mistä backendiin
-      tallennetaan tiedot */}
+    <>
       {
-        kokeilu.map((file, index)=>{
-          return <li key={index}> {file.file_id}</li>;
+        mediaHelper.map((file, index)=>{
+          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
         })
       }
-    </div>
+      {
+        medianeedHelp.map((file, index)=>{
+          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
+        })
+      }
+    </>
   );
 };
 
