@@ -102,4 +102,27 @@ const addTag = async (file_id, tag) => {
   }
 };
 
-export { useMedia, login, register, uploadFile, addTag };
+const useMediaByTag = (tag) => {
+  const [data, setData] = useState([]);
+  const fetchUrl = async () => {
+    // Hae kaikki kuvat -> saadaan selville kuvan id
+    const response = await fetch(baseUrl + 'tags/' + tag);
+    const json = await response.json();
+    // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
+    const items = await Promise.all(
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        return await response.json();
+      })
+    );
+    setData(items);
+  };
+
+  useEffect(() => {
+    fetchUrl();
+  }, []);
+
+  return data;
+};
+
+export { useMedia, login, register, uploadFile, addTag, useMediaByTag };

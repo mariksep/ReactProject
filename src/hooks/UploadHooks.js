@@ -9,8 +9,14 @@ const useUploadForm = (callback) => {
     type: '',
   });
 
+  const [error, setError] = useState(false);
+
   const handleSubmit = (event) => {
     if (event) {
+      if (inputs.type === '') {
+        setError(true);
+        return false;
+      }
       event.preventDefault();
     }
 
@@ -55,6 +61,8 @@ const useUploadForm = (callback) => {
     handleRadioChange,
     inputs,
     setInputs,
+    error,
+    setError,
   };
 };
 

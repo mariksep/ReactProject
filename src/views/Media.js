@@ -8,8 +8,14 @@ const Media = () => {
     <div>
       <h1> Media nappula kumpi row haetaan </h1>
       <MediaTable />
-      <Button component={RouterLink} to='/upload'>
+      <Button fullWidth component={RouterLink} to='/upload'>
         Uploadiin
+      </Button>
+      <Button fullWidth component={RouterLink} to='/helpers'>
+        Helpers
+      </Button>
+      <Button fullWidth component={RouterLink} to='/helpwanted'>
+        HelpWanted
       </Button>
     </div>
   );

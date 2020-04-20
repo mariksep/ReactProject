@@ -14,53 +14,44 @@ import {
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
 import { uploadFile } from '../hooks/ApiHooks';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  dangerText: {
-    color: 'red',
-    fontSize: '1.2em',
-    borderBottom: '1px solid red',
-  },
-}));
 
 const Upload = ({ history }) => {
-  const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
   const doUpload = async () => {
-    if (inputs.type === '') {
-      const uploadRadioText = document.querySelector('#uploadRadioText');
-      uploadRadioText.classList.add(classes.dangerText);
-      return false;
-    } else {
-      console.log('input up', inputs);
-      setLoading(true);
+    console.log('input up', inputs);
+    setLoading(true);
 
-      try {
-        const uploadObject = {
-          title: inputs.title,
-          description: inputs.description,
-          file: inputs.file,
-        };
-        const tag_name = inputs.type;
-        console.log('tagi', tag_name);
-        const result = await uploadFile(uploadObject, tag_name);
-        console.log('filen lataus onnistui', result);
-        // Siirry etusivulle
-        setTimeout(() => {
-          setLoading(false);
-          history.push('/media');
-        }, 2000);
-      } catch (e) {
-        console.log(e.message);
-      }
+    try {
+      const uploadObject = {
+        title: inputs.title,
+        description: inputs.description,
+        file: inputs.file,
+      };
+
+      const tag_name = inputs.type;
+      console.log('tagi', tag_name);
+      const result = await uploadFile(uploadObject, tag_name);
+      console.log('filen lataus onnistui', result);
+
+      // Siirry sille sivulle mitä tyyppiä postaus oli
+      setTimeout(() => {
+        setLoading(false);
+        if (inputs.type === 'nhahelper') {
+          history.push('/helpers');
+        } else {
+          history.push('/helpwanted');
+        }
+      }, 2000);
+    } catch (e) {
+      console.log(e.message);
     }
   };
 
   const {
     inputs,
     setInputs,
+    error,
     handleInputChange,
     handleSubmit,
     handleFileChange,
@@ -108,7 +99,7 @@ const Upload = ({ history }) => {
         Add new task
       </Typography>
       <ValidatorForm instantValidate={false} noValidate onSubmit={handleSubmit}>
-        <FormControl component='fieldset'>
+        <FormControl component='fieldset' error={error}>
           <FormLabel id='uploadRadioText' component='legend'>
             Choose the type of the task
           </FormLabel>
@@ -137,7 +128,7 @@ const Upload = ({ history }) => {
           name='title'
           value={inputs.title}
           onChange={handleInputChange}
-          validators={['required']}
+          validators={['required', 'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$']}
           errorMessages={['Type title for your task']}
         />
         <TextValidator
@@ -146,10 +137,8 @@ const Upload = ({ history }) => {
           name='description'
           value={inputs.description}
           onChange={handleInputChange}
-          validators={[
-            "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
-          ]}
-          errorMessages={['Tell more about your task']}
+          validators={['matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$']}
+          errorMessages={['Special characters are not allowed. Text only!']}
         />
         <TextValidator
           type='file'
