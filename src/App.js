@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './views/Login';
 import Media from './views/Media';
 import Upload from './views/Upload';
-import {MediaProvider} from './contexts/MediaContext';
+import { MediaProvider } from './contexts/MediaContext';
+import Helpers from './views/Helpers';
+import HelpWanted from './views/HelpWanted';
+import Profile from './views/Profile';
 
 const App = () => {
   return (
@@ -15,6 +18,10 @@ const App = () => {
             <Route exact path='/' component={Login} />
             <Route path='/media' component={Media} />
             <Route path='/upload' component={Upload} />
+            <Route path='/helpers' component={Helpers} />
+            <Route path='/helpwanted' component={HelpWanted} />
+            <Route path='/profile' component={Profile} />
+
           </Switch>
         </MediaProvider>
       </Router>

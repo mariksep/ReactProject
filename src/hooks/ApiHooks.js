@@ -39,24 +39,29 @@ const login = async (inputs) => {
   }
 };
 
-const useMedia = (tag) => {
+const useMedia = () => {
   const [data, setData] = useState([]);
   const fetchUrl = async () => {
-    const resp = await fetch(baseUrl + 'tags/'+ tag);
-    const json = await resp.json();
+    const response = await fetch(baseUrl + 'tags/mpjakk');
+    const json = await response.json();
+    // haetaan yksittäiset kuvat, jotta saadan thumbnailit
     const items = await Promise.all(
         json.map(async (item) => {
           const response = await fetch(baseUrl + 'media/' + item.file_id);
           return await response.json();
         }),
     );
+    console.log(items);
     setData(items);
   };
+
   useEffect(() => {
     fetchUrl();
   }, []);
+
   return data;
 };
+
 
 const uploadFile = async (inputs, tag) => {
   console.log('api hook up file', tag);
@@ -106,5 +111,55 @@ const addTag = async (file_id, tag) => {
     throw new Error(e.message);
   }
 };
+const userInformation = async (token)=>{
+  const fetchOptions = {
+    headers: {
+      'x-access-token': token,
+    },
+  };
+  try {
+    const response = await fetch(baseUrl + 'users/user', fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ':' + json.error);
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+const userAvatar = async (id)=>{
+  const response = await fetch(baseUrl + 'tags/avatar_' + id);
+  return await response.json();
+};
 
-export {useMedia, login, register, uploadFile, addTag};
+const useMediaByTag = (tag) => {
+  const [data, setData] = useState([]);
+  const fetchUrl = async () => {
+    // Hae kaikki kuvat -> saadaan selville kuvan id
+    const response = await fetch(baseUrl + 'tags/' + tag);
+    const json = await response.json();
+    // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
+    const items = await Promise.all(
+        json.map(async (item) => {
+          const response = await fetch(baseUrl + 'media/' + item.file_id);
+          return await response.json();
+        }),
+    );
+    setData(items);
+  };
+
+  useEffect(() => {
+    fetchUrl();
+  }, []);
+
+  return data;
+};
+
+export {useMedia,
+  login,
+  register,
+  uploadFile,
+  addTag,
+  useMediaByTag,
+  userInformation,
+  userAvatar,
+};

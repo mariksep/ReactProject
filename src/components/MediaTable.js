@@ -1,34 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {useMedia} from '../hooks/ApiHooks';
-import {Button} from '@material-ui/core/';
+import React from 'react';
+import {useMediaByTag} from '../hooks/ApiHooks';
+const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 const MediaTable = ()=> {
-  const [List, setList]= useState(true);
-  const [tag, setTag] = useState('nhaneedhelp');
 
-  const fileList = () =>{
-    setList(!List);
-    if (tag==='nhaneedhelp') {
-      setTag('nhahelper');
-    } else {
-      setTag('nhaneedhelp');
-    }
-  };
-  const Media = useMedia(tag);
+  const mediaHelper = useMediaByTag('nhahelper');
+  const medianeedHelp = useMediaByTag('nhaneedhelp');
 
-  console.log(tag);
 
   return (
     <>
-      <Button
-        variant="outlined" size="large"
-        onClick={fileList}>{List ? 'needhelp' : 'helper'}
-      </Button>
       {
-        Media.map((file, index)=>{
-          return <img key={index} src={mediaUrl+ file.thumbnails.w160}/>;
+        mediaHelper.map((file, index)=>{
+          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
+        })
+      }
+      {
+        medianeedHelp.map((file, index)=>{
+          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
         })
       }
     </>

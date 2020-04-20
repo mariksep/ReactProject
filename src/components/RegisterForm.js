@@ -9,8 +9,8 @@ import {Button} from '@material-ui/core/';
 
 
 const RegisterForm = ({history}) => {
-  const [user, setUser]= useContext(MediaContext);
-  const doRegister = async ()=>{
+  const [user, setUser] = useContext(MediaContext);
+  const doRegister = async () => {
     try {
       delete inputs.confirm;
       // lähettää tiedot apihooksiin
@@ -35,7 +35,8 @@ const RegisterForm = ({history}) => {
   const {inputs, handlesubmit,
     handleInputChange} = useRegisterForm(doRegister);
 
-  useEffect(()=> {
+
+  useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       console.log(value);
       if (value !== inputs.password) {
@@ -58,12 +59,10 @@ const RegisterForm = ({history}) => {
           type='text'
           onChange={handleInputChange}
           name='username'
-
           label='username'
           variant='outlined'
           validators={['minStringLength:3', 'required', 'isAvailable']}
-
-
+          errorMessages={['password mismatch', 'this field is required']}
         />
         <TextValidator
           fullWidth
@@ -94,31 +93,30 @@ const RegisterForm = ({history}) => {
             'password mismatch',
             'this field is required']}
 
-
         />
         <TextValidator
           fullWidth
           type='password'
           onChange={handleInputChange}
           name='password'
-          label="password"
-          variant="outlined"
+
+          label='password'
+          variant='outlined'
           validators={['minStringLength:5', 'required']}
-          errorMessages={[
-            'min length 5',
-            'this field is required']}
+          errorMessages={['min length 5', 'this field is required']}
         />
         <TextValidator
           fullWidth
           type='password'
           onChange={handleInputChange}
-          variant="outlined"
+          variant='outlined'
           name='confirm'
           label="confirm password"
           validators={['isMatch', 'required']}
           errorMessages={[
             'password mismatch',
             'this field is required']}
+
         />
         <TextValidator
           fullWidth
@@ -128,9 +126,10 @@ const RegisterForm = ({history}) => {
           placeholder='full name'
         />
 
-        <Button
-          variant="outlined" size="large"
-          type="submit">Submit</Button>
+
+        <Button variant='outlined' size='large' type='submit'>
+          Submit
+        </Button>
       </ValidatorForm>
     </>
   );
