@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -39,13 +39,18 @@ const login = async (inputs) => {
   }
 };
 
-const useMedia = () => {
+const useMedia = (tag) => {
   const [data, setData] = useState([]);
   const fetchUrl = async () => {
-    const resp = await fetch(baseUrl + 'media');
+    const resp = await fetch(baseUrl + 'tags/'+ tag);
     const json = await resp.json();
-    console.log(json);
-    setData(json);
+    const items = await Promise.all(
+        json.map(async (item) => {
+          const response = await fetch(baseUrl + 'media/' + item.file_id);
+          return await response.json();
+        }),
+    );
+    setData(items);
   };
   useEffect(() => {
     fetchUrl();
@@ -73,7 +78,7 @@ const uploadFile = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return { json, tagJson };
+    return {json, tagJson};
   } catch (e) {
     throw new Error(e.message);
   }
@@ -102,4 +107,4 @@ const addTag = async (file_id, tag) => {
   }
 };
 
-export { useMedia, login, register, uploadFile, addTag };
+export {useMedia, login, register, uploadFile, addTag};

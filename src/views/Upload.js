@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import BackButton from '../components/BackButton';
 import {
@@ -11,10 +11,10 @@ import {
   FormControl,
   FormHelperText,
 } from '@material-ui/core';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
-import { uploadFile } from '../hooks/ApiHooks';
-import { makeStyles } from '@material-ui/core/styles';
+import {uploadFile} from '../hooks/ApiHooks';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   dangerText: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Upload = ({ history }) => {
+const Upload = ({history}) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -74,17 +74,17 @@ const Upload = ({ history }) => {
     const reader = new FileReader();
 
     reader.addEventListener(
-      'load',
-      () => {
+        'load',
+        () => {
         // convert image file to base64 string
-        setInputs((inputs) => {
-          return {
-            ...inputs,
-            dataUrl: reader.result,
-          };
-        });
-      },
-      false
+          setInputs((inputs) => {
+            return {
+              ...inputs,
+              dataUrl: reader.result,
+            };
+          });
+        },
+        false,
     );
 
     if (inputs.file !== null) {
@@ -147,7 +147,7 @@ const Upload = ({ history }) => {
           value={inputs.description}
           onChange={handleInputChange}
           validators={[
-            "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
+            'matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$',
           ]}
           errorMessages={['Tell more about your task']}
         />
