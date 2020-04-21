@@ -4,7 +4,6 @@ const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
 
 const MediaTable = ()=> {
-
   const mediaHelper = useMediaByTag('nhahelper');
   const medianeedHelp = useMediaByTag('nhaneedhelp');
 

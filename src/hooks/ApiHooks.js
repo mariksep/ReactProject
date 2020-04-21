@@ -11,11 +11,9 @@ const register = async (inputs) => {
     body: JSON.stringify(inputs),
   };
   try {
-    const resp = await fetch(baseUrl + 'users', fetchOptions);
-    const json = await resp.json();
-    if (!resp.ok) throw new Error(json.message + ':' + json.error);
-    console.log(resp);
-    return json;
+    const response = await fetch(baseUrl + 'users', fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ':' + json.error);
   } catch (e) {
     throw new Error(e.message);
   }
@@ -150,6 +148,33 @@ const useMediaByTag = (tag) => {
 
   return data;
 };
+const updateProfile = async (inputs, token) => {
+  const fetchOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+    body: JSON.stringify(inputs),
+  };
+  try {
+    const response = await fetch(baseUrl + 'users', fetchOptions);
+    const json = response.json();
+    if (!response.ok) throw new Error(json.message+json.error);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+const checkUserAvailable = async (username) => {
+  try {
+    const response = await fetch(baseUrl + 'users/username/' + username);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ':' + json.error);
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
 
 export {useMedia,
   login,
@@ -159,4 +184,6 @@ export {useMedia,
   useMediaByTag,
   userInformation,
   userAvatar,
+  updateProfile,
+  checkUserAvailable,
 };

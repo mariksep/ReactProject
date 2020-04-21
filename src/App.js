@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './views/Login';
 import Media from './views/Media';
 import Upload from './views/Upload';
-import { MediaProvider } from './contexts/MediaContext';
+import {MediaContext, MediaProvider} from './contexts/MediaContext';
 import Helpers from './views/Helpers';
 import HelpWanted from './views/HelpWanted';
 import Profile from './views/Profile';
+import PropTypes from 'prop-types';
 
-const App = () => {
+
+const App = ({history}) => {
   return (
     <>
       <Router>
@@ -28,5 +30,9 @@ const App = () => {
     </>
   );
 };
+App.propTypes = {
+  history: PropTypes.object,
+};
+
 
 export default App;

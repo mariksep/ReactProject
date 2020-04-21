@@ -4,9 +4,22 @@ import useLoginForm from '../hooks/LoginHooks';
 import {login} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {withRouter} from 'react-router-dom';
-import {TextField, Button} from '@material-ui/core/';
+import {TextField, Button, Grid} from '@material-ui/core/';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  inputs: {
+    padding: '1em',
+    textAlign: 'center',
+    width: '60vw',
+  },
+
+
+}));
 
 const LoginForm =({history}) => {
+  const classes = useStyles();
+
   const [user, setUser] = useContext(MediaContext);
   const doLogin = async () =>{
     try {
@@ -27,34 +40,59 @@ const LoginForm =({history}) => {
   const {inputs, handlesubmit,
     handleInputChange} = useLoginForm(doLogin);
   return (
-    <>
-      <h1>Login</h1>
-      <form onSubmit={handlesubmit}>
-        <TextField
-          fullWidth
-          variant="outlined"
-          onChange={handleInputChange}
-          type='text'
-          name='username'
-          className='username'
-          label="username"
-          value={inputs.username}
-        />
-        <TextField
-          fullWidth
-          variant="outlined"
-          onChange={handleInputChange}
-          type='password'
-          name='password'
-          label="password"
-          value={inputs.password}
 
-        />
-        <Button
-          variant="outlined" size="large"
-          type="submit" >Login</Button>
-      </form>
-    </>
+    <Grid
+      container
+      direction="column"
+      justify="space-around"
+      alignItems="center">
+
+      <Grid item>
+        <div>
+          <h1>Login</h1>
+        </div>
+      </Grid>
+
+      <Grid item>
+        <form onSubmit={handlesubmit}>
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item>
+              <TextField
+                className={classes.inputs}
+                onChange={handleInputChange}
+                type='text'
+                name='username'
+                placeholder="username"
+                value={inputs.username}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                className={classes.inputs}
+                onChange={handleInputChange}
+                type='password'
+                name='password'
+                placeholder="password"
+                value={inputs.password}
+
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined" size="large"
+                type="submit" >Login</Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
+    </Grid>
+
+
   );
 };
 LoginForm.propTypes = {

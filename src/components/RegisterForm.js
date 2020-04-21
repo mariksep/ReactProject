@@ -1,40 +1,48 @@
 import React, {useContext, useEffect} from 'react';
-import useRegisterForm from '../hooks/RegisterHooks';
-import {MediaContext} from '../contexts/MediaContext';
-import {login, register} from '../hooks/ApiHooks';
-import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useSignUpForm from '../hooks/RegisterHooks';
+import {checkUserAvailable, login, register} from '../hooks/ApiHooks';
+import {withRouter} from 'react-router-dom';
+import {MediaContext} from '../contexts/MediaContext';
+import {Button, Grid} from '@material-ui/core';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {Button} from '@material-ui/core/';
+import {makeStyles} from '@material-ui/core/styles';
+import {TextField} from './LoginForm';
+
+const useStyles = makeStyles((theme) => ({
+  inputs: {
+    padding: '1em',
+    textAlign: 'center',
+    width: '60vw',
+  },
+
+
+}));
 
 
 const RegisterForm = ({history}) => {
+  const classes = useStyles();
+
+  // eslint-disable-next-line no-unused-vars
   const [user, setUser] = useContext(MediaContext);
+
   const doRegister = async () => {
     try {
       delete inputs.confirm;
-      // lähettää tiedot apihooksiin
       await register(inputs);
-      // hakee käyttäjän tiedot Apihooksista
-      const userData = await login(inputs);
-      // tallenta ne ylhäällä olevaan user muuttujaan
-      setUser(userData.user);
-      // tallentaa token
-      localStorage.setItem('token', userData.token);
-      // siirtyy media sivulle
+      // kirjaudu automaagisesti
+      const userdata = await login(inputs);
+      setUser(userdata.user);
+      // tallenna token
+      localStorage.setItem('token', userdata.token);
+      // siirry etusivulle
       history.push('/media');
     } catch (e) {
       console.log(e.message);
-      alert(e.message);
-
-      // throw new Error(e.message);
     }
   };
 
-
-  const {inputs, handlesubmit,
-    handleInputChange} = useRegisterForm(doRegister);
-
+  const {inputs, handleInputChange, handleSubmit} = useSignUpForm(doRegister);
 
   useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -47,95 +55,131 @@ const RegisterForm = ({history}) => {
 
     ValidatorForm.addValidationRule('isAvailable', async (value) => {
       console.log(value);
+      try {
+        const response = await checkUserAvailable(value);
+        console.log(response);
+        return response.available;
+      } catch (e) {
+        console.log(e.message);
+        return true;
+      }
     });
-  });
+  }, [inputs]);
+
 
   return (
     <>
-      <h1>Register</h1>
-      <ValidatorForm onSubmit={handlesubmit}>
-        <TextValidator
-          fullWidth
-          type='text'
-          onChange={handleInputChange}
-          name='username'
-          label='username'
-          variant='outlined'
-          validators={['minStringLength:3', 'required', 'isAvailable']}
-          errorMessages={['password mismatch', 'this field is required']}
-        />
-        <TextValidator
-          fullWidth
-          type='email'
-          onChange={handleInputChange}
-          name='email'
-          placeholder='email'
-        />
-        <input
-          type='password'
-          onChange={handleInputChange}
-          name='password'
-          placeholder='password'
-        />
-        <TextValidator
-          id='standard-password-input'
-          type='password'
-          onChange={handleInputChange}
-          variant='outlined'
-          name='confirm'
+      <Grid
+        container
+        direction="column"
+        justify="space-around"
+        alignItems="center">
 
-          label='confirm password'
-          validators={[
-            'isMatch',
-            'required']}
-          aria-errormessage='password mismatch and this field is required'
-          errorMessages={[
-            'password mismatch',
-            'this field is required']}
+        <Grid item>
+          <div>
+            <h1>Register</h1>
+          </div>
+        </Grid>
+        <Grid item>
+          <ValidatorForm
+            onSubmit={handleSubmit}
+            instantValidate={false}
+            noValidate
+          >
+            <Grid container
+              direction="column"
+              justify="space-between"
+              alignItems="center"
+            >
+              <TextValidator
+                className={classes.inputs}
 
-        />
-        <TextValidator
-          fullWidth
-          type='password'
-          onChange={handleInputChange}
-          name='password'
-
-          label='password'
-          variant='outlined'
-          validators={['minStringLength:5', 'required']}
-          errorMessages={['min length 5', 'this field is required']}
-        />
-        <TextValidator
-          fullWidth
-          type='password'
-          onChange={handleInputChange}
-          variant='outlined'
-          name='confirm'
-          label="confirm password"
-          validators={['isMatch', 'required']}
-          errorMessages={[
-            'password mismatch',
-            'this field is required']}
-
-        />
-        <TextValidator
-          fullWidth
-          type='text'
-          onChange={handleInputChange}
-          name='full_name'
-          placeholder='full name'
-        />
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleInputChange}
+                value={inputs.username}
+                validators={[
+                  'required',
+                  'minStringLength:3',
+                  'isAvailable',
+                ]}
+                errorMessages={[
+                  'this field is required',
+                  'minimum 3 charaters',
+                  inputs.username + ' is not available',
+                ]}
+              />
 
 
-        <Button variant='outlined' size='large' type='submit'>
-          Submit
-        </Button>
-      </ValidatorForm>
+              <TextValidator
+                className={classes.inputs}
+
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleInputChange}
+                value={inputs.password}
+                validators={['minStringLength:5', 'required']}
+                errorMessages={[
+                  'minimum length 5 characters',
+                  'this field is required']}
+              />
+
+
+              <TextValidator
+                className={classes.inputs}
+
+                type="password"
+                name="confirm"
+                placeholder="Confirm password"
+                onChange={handleInputChange}
+                value={inputs.confirm}
+                validators={['isPasswordMatch', 'required']}
+                errorMessages={['password mismatch', 'this field is required']}
+              />
+
+
+              <TextValidator
+                className={classes.inputs}
+
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleInputChange}
+                value={inputs.email}
+                validators={['required', 'isEmail']}
+                errorMessages={['this field is required', 'email is not valid']}
+              />
+
+
+              <TextValidator
+                className={classes.inputs}
+
+                type="text"
+                name="full_name"
+                placeholder="Full name"
+                onChange={handleInputChange}
+                value={inputs.full_name}
+                validators={
+                  ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
+                }
+                errorMessages={['text only']}
+              />
+
+
+              <Button
+                type="submit"
+              >
+              Register
+              </Button>
+            </Grid>
+          </ValidatorForm>
+        </Grid>
+      </Grid>
     </>
   );
-}
-  ;
-
+};
 
 RegisterForm.propTypes = {
   history: PropTypes.object,
