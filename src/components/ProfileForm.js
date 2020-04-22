@@ -1,28 +1,46 @@
 import React, {useContext, useEffect} from 'react';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import {Button} from '@material-ui/core/';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
+import {Button, Grid} from '@material-ui/core';
+import UploadProfilePic from '../views/UploadProfilePic';
+
 import {
   checkUserAvailable,
   updateProfile,
   userInformation,
 } from '../hooks/ApiHooks';
 import useProfileForm from '../hooks/ProfileHooks';
+import {makeStyles} from '@material-ui/core/styles';
+import BackButton from './BackButton';
+
+const useStyles = makeStyles((theme) => ({
+  inputs: {
+    padding: '1em',
+    textAlign: 'center',
+    width: '60vw',
+  },
+
+
+}));
 
 const ProfileForm = ({history}) => {
-  const [user, setUser] = useContext(MediaContext);
-  const doUpdate=async () =>{
+  const classes = useStyles();
+
+  const [user, setUser]= useContext(MediaContext);
+
+
+
+  const doUpdate= async () =>{
     try {
+      // await checkUserAvailable(inputs.username);
       const token = localStorage.getItem('token');
       await updateProfile(inputs, token);
-      const userdata= userInformation(token);
+      const userdata = await userInformation(token);
       setUser(userdata);
-
       setTimeout(() => {
         alert('information updated');
-        history.push('/media');
       }, 100);
     } catch (e) {
       console.log(e.message);
@@ -31,10 +49,10 @@ const ProfileForm = ({history}) => {
 
 
   const {
-    handleSubmit,
+    handleSubmitProfile,
     inputs,
     setInputs,
-    handleInputChange,
+    handleInputChangeProfile,
   }=useProfileForm(doUpdate);
 
 
@@ -60,43 +78,51 @@ const ProfileForm = ({history}) => {
 
   return (
     <>
-      <h1>Update your profile</h1>
+      <h1>Update your profile information</h1>
       <ValidatorForm
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitProfile}
         instantValidate={false}
         noValidate
       >
-        <TextValidator
+        <Grid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="center"
+        >
+          <TextValidator
+            className={classes.inputs}
 
-          type="text"
-          name="username"
-          label="Username"
-          onChange={handleInputChange}
-          value={inputs.username}
-          validators={[
-            'required',
-            'minStringLength:3',
-            'isAvailable',
-          ]}
-          errorMessages={[
-            'this field is required',
-            'minimum 3 charaters',
-            inputs.username + ' is not available',
-          ]}
-        />
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={handleInputChangeProfile}
+            value={inputs.username}
+            validators={[
+              'required',
+              'minStringLength:3',
+              'isAvailable',
+            ]}
+            errorMessages={[
+              'this field is required',
+              'minimum 3 charaters',
+              inputs.username + ' is not available',
+            ]}
+          />
 
-        <TextValidator
+          <TextValidator
+            className={classes.inputs}
 
-          type="email"
-          name="email"
-          label="Email"
-          onChange={handleInputChange}
-          value={inputs.email}
-          validators={['isEmail']}
-          errorMessages={['this field is required',
-            'email is not valid']}
-        />
-        {/*
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleInputChangeProfile}
+            value={inputs.email}
+            validators={['isEmail']}
+            errorMessages={['this field is required',
+              'email is not valid']}
+          />
+          {/*
           <TextValidator
 
               type='password'
@@ -108,22 +134,25 @@ const ProfileForm = ({history}) => {
               errorMessages={['min length 5', 'this field is required']}
           />
         */}
-        <TextValidator
+          <TextValidator
+            className={classes.inputs}
 
-          type="text"
-          name="full_name"
-          label="Full name"
-          onChange={handleInputChange}
-          value={inputs.full_name}
-          validators={
-            ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
-          }
-          errorMessages={['text only']}
+            type="text"
+            name="full_name"
+            placeholder="Full name"
+            onChange={handleInputChangeProfile}
+            value={inputs.full_name}
+            validators={
+              ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
+            }
+            errorMessages={['text only']}
 
-        />
-        <Button type='submit' >Save</Button>
+          />
 
+          <Button type='submit' >Save</Button>
+        </Grid>
       </ValidatorForm>
+      <UploadProfilePic></UploadProfilePic>
     </>
   );
 };

@@ -121,10 +121,7 @@ const userInformation = async (token)=>{
     throw new Error(e.message);
   }
 };
-const userAvatar = async (id)=>{
-  const response = await fetch(baseUrl + 'tags/avatar_' + id);
-  return await response.json();
-};
+
 
 const useMediaByTag = (tag) => {
   const [data, setData] = useState([]);
@@ -175,6 +172,38 @@ const checkUserAvailable = async (username) => {
     throw new Error(e.message);
   }
 };
+const getAvatarImage = async (id) => {
+  const response = await fetch(baseUrl + 'tags/nha_profile'+id);
+  return await response.json();
+};
+
+
+const uploadProfilePic = async ( inputs, tag) => {
+  console.log(inputs, tag);
+  const fd = new FormData();
+  fd.append('title', '');
+  fd.append('description', '');
+  fd.append('file', inputs.file);
+
+  const fetchOptions = {
+    method: 'POST',
+    body: fd,
+    headers: {
+      'x-access-token': localStorage.getItem('token'),
+    },
+  };
+
+  try {
+    const response = await fetch(baseUrl + 'media', fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ': ' + json.error);
+    const tagJson = addTag(json.file_id, tag);
+    return {json, tagJson};
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 
 export {useMedia,
   login,
@@ -183,7 +212,8 @@ export {useMedia,
   addTag,
   useMediaByTag,
   userInformation,
-  userAvatar,
   updateProfile,
   checkUserAvailable,
+  getAvatarImage,
+  uploadProfilePic,
 };

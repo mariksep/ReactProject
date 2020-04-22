@@ -7,13 +7,13 @@ const useProfileForm = (callback) => {
     email: '',
     full_name: '',
   });
-  const handleSubmit = (event)=>{
+  const handleSubmitProfile = (event)=>{
     if (event) {
       event.preventDefault();
     }
     callback();
   };
-  const handleInputChange = (event) => {
+  const handleInputChangeProfile = (event) => {
     event.persist();
     setInputs((inputs)=>{
       return {
@@ -24,10 +24,10 @@ const useProfileForm = (callback) => {
   };
 
   return {
-    handleSubmit,
+    handleSubmitProfile,
     inputs,
     setInputs,
-    handleInputChange,
+    handleInputChangeProfile,
 
   };
 };
