@@ -1,23 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import BackButton from '../components/BackButton';
 import { Typography } from '@material-ui/core';
-import { useMediaByTag } from '../hooks/ApiHooks';
+import MediaTable from '../components/MediaTable';
 
-const Helpers = (props) => {
-  const posts = useMediaByTag('nhahelper');
-  console.log('helpers', posts);
-
+const Helpers = () => {
   return (
     <>
       <BackButton />
       <Typography component='h1' variant='h2' gutterBottom>
         Helpers
       </Typography>
+      <MediaTable type={'nhahelper'} />
     </>
   );
 };
-
-Helpers.propTypes = {};
 
 export default Helpers;

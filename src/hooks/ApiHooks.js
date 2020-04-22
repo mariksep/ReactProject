@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -46,10 +46,10 @@ const useMedia = () => {
     const json = await response.json();
     // haetaan yksittäiset kuvat, jotta saadan thumbnailit
     const items = await Promise.all(
-        json.map(async (item) => {
-          const response = await fetch(baseUrl + 'media/' + item.file_id);
-          return await response.json();
-        }),
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        return await response.json();
+      })
     );
     console.log(items);
     setData(items);
@@ -61,7 +61,6 @@ const useMedia = () => {
 
   return data;
 };
-
 
 const uploadFile = async (inputs, tag) => {
   const fd = new FormData();
@@ -82,7 +81,7 @@ const uploadFile = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return {json, tagJson};
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -108,7 +107,8 @@ const addTag = async (file_id, tag) => {
     throw new Error(e.message);
   }
 };
-const userInformation = async (token)=>{
+
+const userInformation = async (token) => {
   const fetchOptions = {
     headers: {
       'x-access-token': token,
@@ -123,23 +123,24 @@ const userInformation = async (token)=>{
     throw new Error(e.message);
   }
 };
-const userAvatar = async (id)=>{
+
+const userAvatar = async (id) => {
   const response = await fetch(baseUrl + 'tags/avatar_' + id);
   return await response.json();
 };
 
 const useMediaByTag = (tag) => {
   const [data, setData] = useState([]);
-  const fetchUrl = async (tagi) => {
+  const fetchUrl = async (tag) => {
     // Hae kaikki kuvat -> saadaan selville kuvan id
-    const response = await fetch(baseUrl + 'tags/' + tagi);
+    const response = await fetch(baseUrl + 'tags/' + tag);
     const json = await response.json();
     // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
     const items = await Promise.all(
-        json.map(async (item) => {
-          const response = await fetch(baseUrl + 'media/' + item.file_id);
-          return await response.json();
-        }),
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        return await response.json();
+      })
     );
     setData(items);
   };
@@ -151,7 +152,8 @@ const useMediaByTag = (tag) => {
   return data;
 };
 
-export {useMedia,
+export {
+  useMedia,
   login,
   register,
   uploadFile,
