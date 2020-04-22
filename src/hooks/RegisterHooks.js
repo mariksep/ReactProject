@@ -1,14 +1,14 @@
 import {useState} from 'react';
 
-const useRegisterForm = (callback) => {
-  const [inputs, setInputs]= useState({
+const useSignUpForm = (callback) => {
+  const [inputs, setInputs] = useState({
     username: '',
     password: '',
     confirm: '',
     email: '',
     full_name: '',
   });
-  const handlesubmit = (event)=>{
+  const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
     }
@@ -16,20 +16,18 @@ const useRegisterForm = (callback) => {
   };
   const handleInputChange = (event) => {
     event.persist();
-    setInputs((inputs)=>{
+    setInputs((inputs) => {
       return {
         ...inputs,
         [event.target.name]: event.target.value,
       };
     });
   };
-
   return {
-    handlesubmit,
-    inputs,
+    handleSubmit,
     handleInputChange,
-
+    inputs,
   };
 };
 
-export default useRegisterForm;
+export default useSignUpForm;

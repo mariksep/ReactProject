@@ -5,8 +5,8 @@ import { Button } from '@material-ui/core';
 const Media = () => {
   return (
     <div>
-      <Button fullWidth component={RouterLink} to='/upload'>
-        Uploadiin
+      <Button fullWidth component={RouterLink} to='/Profile'>
+        Profile
       </Button>
       <Button fullWidth component={RouterLink} to='/helpers'>
         Helpers
@@ -14,8 +14,8 @@ const Media = () => {
       <Button fullWidth component={RouterLink} to='/helpwanted'>
         HelpWanted
       </Button>
-      <Button fullWidth component={RouterLink} to='/Profile'>
-        Profile
+      <Button fullWidth component={RouterLink} to='/upload'>
+        Uploadiin
       </Button>
     </div>
   );

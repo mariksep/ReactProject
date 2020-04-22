@@ -31,7 +31,6 @@ const MediaTable = ({ type }) => {
   const classes = useStyles();
   const mediaHelpers = useMediaByTag('nhahelper');
   const mediaHelpNeeded = useMediaByTag('nhaneedhelp');
-  console.log('helpers', mediaHelpers);
 
   return (
     <div className={classes.root}>
@@ -54,14 +53,3 @@ MediaTable.propTypes = {
 };
 
 export default MediaTable;
-
-/*   mediaHelpers.map((file, index) => {
-            return <img key={index} src={baseUrl + file.thumbnails.w160} />;
-          })
-
-          mediaHelpNeeded.map((file, index) => {
-            return <img key={index} src={baseUrl + file.thumbnails.w160} />;
-          })
-
-           
-          */
