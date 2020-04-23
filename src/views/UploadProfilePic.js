@@ -1,11 +1,11 @@
 import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import { ValidatorForm} from 'react-material-ui-form-validator';
 import useUploadProfileForm from '../hooks/UploadProfileHooks';
 import {uploadProfilePic, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {withRouter} from 'react-router-dom';
-import {Button, Grid} from '@material-ui/core';
+import {Button } from '@material-ui/core';
 
 
 const UploadProfilePic = ({history}) => {

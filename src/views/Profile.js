@@ -6,7 +6,7 @@ import {userInformation, getAvatarImage} from '../hooks/ApiHooks';
 import ProfileForm from '../components/ProfileForm';
 import {Card, Button, Grid} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import UploadProfilePic from './UploadProfilePic';
+import MyMediaRow from '../components/MyMediaRow';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
@@ -22,7 +22,6 @@ const Profile = ({history}) => {
   const [user, setUser] = useContext(MediaContext);
   const [avatar, setAvatar] = useState([]);
   const [show, setShow] = useState(false);
-  const [info, setInfo] = useState(true);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -42,7 +41,7 @@ const Profile = ({history}) => {
     })();
   }, [user]);
   const profileIndex =avatar.length-1;
-
+  console.log(user);
   const showUpdate = () => {
     setShow(!show);
   };
@@ -51,11 +50,19 @@ const Profile = ({history}) => {
       <BackButton />
       <Grid
         container
-        direction="column"
-        justify="space-between"
+        direction="row"
+        justify="center"
         alignItems="center"
       >
         <h1>Profile</h1>
+      </Grid>
+
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
 
         {(
           user !== null&&
@@ -75,18 +82,27 @@ const Profile = ({history}) => {
                 <p>{user.email}</p>
                 <p>{user.full_name}</p>
                 <Button onClick={showUpdate}>Change</Button>
+                {show ?
+                    <>
+                      <Card><ProfileForm></ProfileForm></Card>
+
+                    </> :
+                    <></>
+
+                }
               </Card>
 
-              {show ?
-                 <>
-                   <Card><ProfileForm></ProfileForm></Card>
 
-                 </> :
-                  <Card></Card>
 
-              }
+              <Card>
+                <MyMediaRow/>
+
+              </Card>
             </>
+
+
         )}
+
 
       </Grid>
 

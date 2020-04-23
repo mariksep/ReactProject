@@ -13,7 +13,6 @@ import {
 } from '../hooks/ApiHooks';
 import useProfileForm from '../hooks/ProfileHooks';
 import {makeStyles} from '@material-ui/core/styles';
-import BackButton from './BackButton';
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
@@ -29,7 +28,6 @@ const ProfileForm = ({history}) => {
   const classes = useStyles();
 
   const [user, setUser]= useContext(MediaContext);
-
 
 
   const doUpdate= async () =>{
@@ -86,7 +84,7 @@ const ProfileForm = ({history}) => {
       >
         <Grid
           container
-          direction="column"
+          direction="row"
           justify="space-between"
           alignItems="center"
         >
@@ -122,18 +120,17 @@ const ProfileForm = ({history}) => {
             errorMessages={['this field is required',
               'email is not valid']}
           />
-          {/*
-          <TextValidator
 
-              type='password'
-              onChange={handleInputChange}
-              name='password'
-              label='password'
-              value={inputs.password}
-              validators={['minStringLength:5', 'required']}
-              errorMessages={['min length 5', 'this field is required']}
+          <TextValidator
+              className={classes.inputs}
+            type='password'
+            onChange={handleInputChangeProfile}
+            name='password'
+            placeholder='change password'
+            value={inputs.password}
+
           />
-        */}
+
           <TextValidator
             className={classes.inputs}
 
@@ -148,7 +145,6 @@ const ProfileForm = ({history}) => {
             errorMessages={['text only']}
 
           />
-
           <Button type='submit' >Save</Button>
         </Grid>
       </ValidatorForm>
