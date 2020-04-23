@@ -245,6 +245,11 @@ const Upload = ({history}) => {
                   errorMessages={['Type your contact-information']}
                 />
               </Grid>
+              {loading && (
+                <Grid item className={classes.preview}>
+                  <CircularProgress />
+                </Grid>
+              )}
               {inputs.dataUrl.length > 0 && (
                 <Grid item xs={12} className={classes.preview}>
                   <div
@@ -283,11 +288,6 @@ const Upload = ({history}) => {
                 </Button>
               </Grid>
             </ValidatorForm>
-            {loading && (
-              <Grid item>
-                <CircularProgress />
-              </Grid>
-            )}
           </Grid>
         </Grid>
       </Grid>

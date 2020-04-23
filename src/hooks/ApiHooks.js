@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -44,10 +44,10 @@ const useMedia = () => {
     const json = await response.json();
     // haetaan yksittäiset kuvat, jotta saadan thumbnailit
     const items = await Promise.all(
-        json.map(async (item) => {
-          const response = await fetch(baseUrl + 'media/' + item.file_id);
-          return await response.json();
-        }),
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        return await response.json();
+      })
     );
     console.log(items);
     setData(items);
@@ -59,7 +59,6 @@ const useMedia = () => {
 
   return data;
 };
-
 
 const uploadFile = async (inputs, tag) => {
   const fd = new FormData();
@@ -80,7 +79,7 @@ const uploadFile = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return {json, tagJson};
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -106,7 +105,8 @@ const addTag = async (file_id, tag) => {
     throw new Error(e.message);
   }
 };
-const userInformation = async (token)=>{
+
+const userInformation = async (token) => {
   const fetchOptions = {
     headers: {
       'x-access-token': token,
@@ -122,19 +122,18 @@ const userInformation = async (token)=>{
   }
 };
 
-
 const useMediaByTag = (tag) => {
   const [data, setData] = useState([]);
-  const fetchUrl = async (tagi) => {
+  const fetchUrl = async (tag) => {
     // Hae kaikki kuvat -> saadaan selville kuvan id
-    const response = await fetch(baseUrl + 'tags/' + tagi);
+    const response = await fetch(baseUrl + 'tags/' + tag);
     const json = await response.json();
     // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
     const items = await Promise.all(
-        json.map(async (item) => {
-          const response = await fetch(baseUrl + 'media/' + item.file_id);
-          return await response.json();
-        }),
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        return await response.json();
+      })
     );
     setData(items);
   };
@@ -145,6 +144,7 @@ const useMediaByTag = (tag) => {
 
   return data;
 };
+
 const updateProfile = async (inputs, token) => {
   const fetchOptions = {
     method: 'PUT',
@@ -157,11 +157,12 @@ const updateProfile = async (inputs, token) => {
   try {
     const response = await fetch(baseUrl + 'users', fetchOptions);
     const json = response.json();
-    if (!response.ok) throw new Error(json.message+json.error);
+    if (!response.ok) throw new Error(json.message + json.error);
   } catch (e) {
     throw new Error(e.message);
   }
 };
+
 const checkUserAvailable = async (username) => {
   try {
     const response = await fetch(baseUrl + 'users/username/' + username);
@@ -172,13 +173,13 @@ const checkUserAvailable = async (username) => {
     throw new Error(e.message);
   }
 };
+
 const getAvatarImage = async (id) => {
-  const response = await fetch(baseUrl + 'tags/nha_profile'+id);
+  const response = await fetch(baseUrl + 'tags/nha_profile' + id);
   return await response.json();
 };
 
-
-const uploadProfilePic = async ( inputs, tag) => {
+const uploadProfilePic = async (inputs, tag) => {
   console.log(inputs, tag);
   const fd = new FormData();
   fd.append('title', '');
@@ -198,14 +199,14 @@ const uploadProfilePic = async ( inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return {json, tagJson};
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
 };
 
-
-export {useMedia,
+export {
+  useMedia,
   login,
   register,
   uploadFile,
