@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const useUploadProfileForm = (callback) => {
+const useUpdateProfileForm = (callback) => {
   const [inputsPic, setInputsPic] = useState({
     title: '',
     description: '',
@@ -35,4 +35,4 @@ const useUploadProfileForm = (callback) => {
   };
 };
 
-export default useUploadProfileForm;
+export default useUpdateProfileForm;

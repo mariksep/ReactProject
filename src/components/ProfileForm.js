@@ -122,12 +122,12 @@ const ProfileForm = ({history}) => {
           />
 
           <TextValidator
-              className={classes.inputs}
+            className={classes.inputs}
             type='password'
             onChange={handleInputChangeProfile}
             name='password'
             placeholder='change password'
-            value={inputs.password}
+            value={inputs.password||''}
 
           />
 

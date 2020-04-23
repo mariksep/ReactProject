@@ -7,6 +7,9 @@ import ProfileForm from '../components/ProfileForm';
 import {Card, Button, Grid} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import MyMediaRow from '../components/MyMediaRow';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import FaceIcon from '@material-ui/icons/Face';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
@@ -41,7 +44,6 @@ const Profile = ({history}) => {
     })();
   }, [user]);
   const profileIndex =avatar.length-1;
-  console.log(user);
   const showUpdate = () => {
     setShow(!show);
   };
@@ -65,7 +67,7 @@ const Profile = ({history}) => {
       >
 
         {(
-          user !== null&&
+          user != null&&
             <>
 
               <Card className={classes.card}>
@@ -78,13 +80,13 @@ const Profile = ({history}) => {
                 }
 
 
-                <p>{user.username}</p>
-                <p>{user.email}</p>
-                <p>{user.full_name}</p>
+                <p><PersonOutlineIcon/>{user.username}</p>
+                <p><AlternateEmailIcon/>{user.email}</p>
+                <p><FaceIcon/>{user.full_name}</p>
                 <Button onClick={showUpdate}>Change</Button>
                 {show ?
                     <>
-                      <Card><ProfileForm></ProfileForm></Card>
+                      <Card><ProfileForm/></Card>
 
                     </> :
                     <></>
@@ -92,12 +94,9 @@ const Profile = ({history}) => {
                 }
               </Card>
 
-
-
-              <Card>
+              <Grid>
                 <MyMediaRow/>
-
-              </Card>
+              </Grid>
             </>
 
 

@@ -9,6 +9,8 @@ import Helpers from './views/Helpers';
 import HelpWanted from './views/HelpWanted';
 import Profile from './views/Profile';
 import PropTypes from 'prop-types';
+import SingleFile from './views/SingleFile';
+import Modify from './views/Modify';
 
 
 const App = ({history}) => {
@@ -23,6 +25,9 @@ const App = ({history}) => {
             <Route path='/helpers' component={Helpers} />
             <Route path='/helpwanted' component={HelpWanted} />
             <Route path='/profile' component={Profile} />
+            <Route path='/SingleFile/:id' component={SingleFile} />
+            <Route path='/Modify/:id' component={Modify} />
+
 
           </Switch>
         </MediaProvider>

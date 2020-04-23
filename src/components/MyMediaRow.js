@@ -1,10 +1,12 @@
 import React, {useContext, useEffect} from 'react';
-import {Card, Button, Grid} from '@material-ui/core';
-import {useMediaByTag, userInformation} from '../hooks/ApiHooks';
+import {Grid, } from '@material-ui/core';
+import { useMediaByTag, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
-const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const MyMediaRow = (props) => {
+
+import MyMediaFileRow from './MyMediaFileRow';
+
+const MyMediaRow = () => {
   const [user, setUser] = useContext(MediaContext);
   useEffect(() => {
     const checkUser = async () => {
@@ -22,7 +24,6 @@ const MyMediaRow = (props) => {
   const helperMyRow= helper.filter((item)=>item.user_id===user.user_id);
   const needhelpMyRow= needhelp.filter((item)=>item.user_id===user.user_id);
 
-  console.log(helperMyRow);
   return (
     <div>
       <h1>Helper Jobs</h1>
@@ -33,7 +34,8 @@ const MyMediaRow = (props) => {
         alignItems="center">
         {helperMyRow.length>0&&
         helperMyRow.map((file, index)=>{
-          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
+
+          return (<MyMediaFileRow key={file.file_id} file={file} index={index}/>);
         })
         }
       </Grid>
@@ -45,7 +47,7 @@ const MyMediaRow = (props) => {
         alignItems="center">
         {needhelpMyRow.length>0&&
         needhelpMyRow.map((file, index)=>{
-          return <img key={index} src={baseUrl +file.thumbnails.w160}/>;
+          return (<MyMediaFileRow key={file.file_id} file={file} index={index}/>);
         })
         }
       </Grid>

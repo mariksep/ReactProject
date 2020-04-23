@@ -1,11 +1,11 @@
 import React, {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { ValidatorForm} from 'react-material-ui-form-validator';
-import useUploadProfileForm from '../hooks/UploadProfileHooks';
+import {ValidatorForm} from 'react-material-ui-form-validator';
+import useUploadProfileForm from '../hooks/UpdateProfileHooks';
 import {uploadProfilePic, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {withRouter} from 'react-router-dom';
-import {Button } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 
 
 const UploadProfilePic = ({history}) => {
@@ -31,8 +31,7 @@ const UploadProfilePic = ({history}) => {
     };
     const result = await uploadProfilePic(uploadObject,
         tag, user.user_id);
-    alert('Profile Picture updated');
-    history.push('/media');
+    window.location.reload();
   };
 
   const {
@@ -52,7 +51,7 @@ const UploadProfilePic = ({history}) => {
           accept='image/*,video/*,audio/*'
           onChange={handleFileChangePicture}
         />
-        <Button  type='submit'>save</Button>
+        <Button type='submit'>save</Button>
       </ValidatorForm>
     </>
   );
