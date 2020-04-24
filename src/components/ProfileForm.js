@@ -13,15 +13,34 @@ import {
 } from '../hooks/ApiHooks';
 import useProfileForm from '../hooks/ProfileHooks';
 import {makeStyles} from '@material-ui/core/styles';
+import BackButton from './BackButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
   inputs: {
     padding: '1em',
     textAlign: 'center',
     width: '60vw',
   },
 
+  modal: {
+    borderRadius: '15px',
+    width: '90%',
+    backgroundColor: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
 
+  },
 }));
 
 const ProfileForm = ({history}) => {
@@ -37,12 +56,13 @@ const ProfileForm = ({history}) => {
       await updateProfile(inputs, token);
       const userdata = await userInformation(token);
       setUser(userdata);
-      setTimeout(() => {
-        alert('information updated');
-      }, 100);
+      window.location.reload();
     } catch (e) {
       console.log(e.message);
     }
+  };
+  const reload = () =>{
+    window.location.reload();
   };
 
 
@@ -75,81 +95,105 @@ const ProfileForm = ({history}) => {
 
 
   return (
-    <>
-      <h1>Update your profile information</h1>
-      <ValidatorForm
-        onSubmit={handleSubmitProfile}
-        instantValidate={false}
-        noValidate
+    <Grid className={classes.container}>
+
+      <Grid
+        className={classes.modal}
       >
         <Grid
           container
+        >
+          <Button
+            fullWidth
+            startIcon={<ArrowBackIcon />}
+            onClick={reload}>Back</Button>
+        </Grid>
+        <Grid
+          container
           direction="row"
-          justify="space-between"
+          justify="center"
           alignItems="center"
         >
-          <TextValidator
-            className={classes.inputs}
 
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleInputChangeProfile}
-            value={inputs.username}
-            validators={[
-              'required',
-              'minStringLength:3',
-              'isAvailable',
-            ]}
-            errorMessages={[
-              'this field is required',
-              'minimum 3 charaters',
-              inputs.username + ' is not available',
-            ]}
-          />
+          <h1>Update your profile information</h1>
+          <ValidatorForm
+            onSubmit={handleSubmitProfile}
+            instantValidate={false}
+            noValidate
+          >
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
+              <TextValidator
+                className={classes.inputs}
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleInputChangeProfile}
+                value={inputs.username}
+                validators={[
+                  'required',
+                  'minStringLength:3',
+                  'isAvailable',
+                ]}
+                errorMessages={[
+                  'this field is required',
+                  'minimum 3 charaters',
+                  inputs.username + ' is not available',
+                ]}
+              />
 
-          <TextValidator
-            className={classes.inputs}
+              <TextValidator
+                className={classes.inputs}
 
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleInputChangeProfile}
-            value={inputs.email}
-            validators={['isEmail']}
-            errorMessages={['this field is required',
-              'email is not valid']}
-          />
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleInputChangeProfile}
+                value={inputs.email}
+                validators={['isEmail']}
+                errorMessages={['this field is required',
+                  'email is not valid']}
+              />
 
-          <TextValidator
-            className={classes.inputs}
-            type='password'
-            onChange={handleInputChangeProfile}
-            name='password'
-            placeholder='change password'
-            value={inputs.password||''}
+              <TextValidator
+                className={classes.inputs}
+                type='password'
+                onChange={handleInputChangeProfile}
+                name='password'
+                placeholder='change password'
+                value={inputs.password||''}
 
-          />
+              />
 
-          <TextValidator
-            className={classes.inputs}
+              <TextValidator
+                className={classes.inputs}
 
-            type="text"
-            name="full_name"
-            placeholder="Full name"
-            onChange={handleInputChangeProfile}
-            value={inputs.full_name}
-            validators={
-              ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
-            }
-            errorMessages={['text only']}
+                type="text"
+                name="full_name"
+                placeholder="Full name"
+                onChange={handleInputChangeProfile}
+                value={inputs.full_name}
+                validators={
+                  ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
+                }
+                errorMessages={['text only']}
 
-          />
-          <Button type='submit' >Save</Button>
+              />
+
+              <Button
+                fullWidth
+                type='submit' >Save</Button>
+
+            </Grid>
+          </ValidatorForm>
         </Grid>
-      </ValidatorForm>
-      <UploadProfilePic></UploadProfilePic>
-    </>
+        <UploadProfilePic></UploadProfilePic>
+      </Grid>
+    </Grid>
   );
 };
 

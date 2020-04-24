@@ -4,14 +4,31 @@ import BackButton from '../components/BackButton';
 import {
   Button,
   Grid,
+  Typography,
+  FormHelperText,
 } from '@material-ui/core/';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {modifyFile, useSingleMedia} from '../hooks/ApiHooks';
 import useModifyFileForm from '../hooks/ModifyFileHooks';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  inputs: {
+    padding: '1em',
+    width: '60vw',
+    textAlign: 'center',
+
+  },
+  helpper: {
+    padding: ' 1.5em',
+
+  },
 
 
+}));
 
 const Modify = ({history, match}) => {
+  const classes = useStyles();
 
   const file = useSingleMedia(match.params.id);
 
@@ -69,7 +86,17 @@ const Modify = ({history, match}) => {
         justify="center"
         alignItems="center"
       >
-        <h1>Modify you post</h1>
+        <Typography
+          component='h1'
+          variant='h2'
+          gutterBottom
+        >Modify you post</Typography>
+        <FormHelperText
+          className={classes.helpper}
+
+        >
+          You can modify your post here:
+        </FormHelperText>
         <ValidatorForm
           onSubmit={handleSubmit}
           instantValidate={false}
@@ -80,31 +107,56 @@ const Modify = ({history, match}) => {
             justify="center"
             alignItems="center">
 
-
-            <TextValidator
-              name='title'
-              onChange={handleInputChange}
-              type='text'
-              placeholder='title'
-              value={inputs.title}
-
-            />
-            <TextValidator
-              name='description'
-              onChange={handleInputChange}
-              type='text'
-              placeholder='description'
-              value={inputs.description}
-
-            />
-            <TextValidator
-              name='contact'
-              onChange={handleInputChange}
-              type='text'
-              placeholder='contact'
-              value={inputs.contact}
-
-            />
+            <Grid item
+              className={classes.inputs}
+            >
+              <TextValidator
+                fullWidth
+                name='title'
+                onChange={handleInputChange}
+                type='text'
+                label='Where do you need help?'
+                value={inputs.title}
+                validators={[
+                  'required',
+                  'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
+                ]}
+                errorMessages={['Type title for your task']}
+              />
+            </Grid>
+            <Grid item
+              className={classes.inputs}
+            >
+              <TextValidator
+                fullWidth
+                name='description'
+                onChange={handleInputChange}
+                type='text'
+                label='Provide a detailed description'
+                value={inputs.description}
+                validators={[
+                  'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
+                ]}
+                errorMessages={['Text only, no special characters']}
+              />
+            </Grid>
+            <Grid item
+              className={classes.inputs}
+            >
+              <TextValidator
+                fullWidth
+                name='contact'
+                onChange={handleInputChange}
+                type='text'
+                label='How people can contact you?'
+                value={inputs.contact}
+                validators={[
+                  'required',
+                  'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
+                ]}
+                errorMessages={['Type your contact-information']}
+              />
+            </Grid>
             <Button type="submit">Save</Button>
 
           </Grid>
