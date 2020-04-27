@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSingleMedia} from '../hooks/ApiHooks';
 import BackButton from '../components/BackButton';
-import {Card, Grid, IconButton, Typography, CardMedia} from '@material-ui/core';
+import {Card, Grid, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import {FormHelperText} from './Modify';
+import {Map, TileLayer, Marker} from 'react-leaflet';
 
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
@@ -27,12 +27,14 @@ const useStyles = makeStyles((theme) => ({
 const SingleFile = ({history, match}) => {
   const classes = useStyles();
   const file = useSingleMedia(match.params.id);
-  console.log(file);
   let description = undefined;
+  let mapLenght = undefined;
   if (file !== null) {
     description = JSON.parse(file.description);
+    mapLenght=Object.keys(description.coords).length;
+    console.log(description);
+
   }
-  console.log(file);
   return (
 
     <>{file != null &&
@@ -71,6 +73,33 @@ const SingleFile = ({history, match}) => {
                 variant="body1"
                 component="p">{description.desc}</Typography>
             </Grid>
+            {mapLenght>0 &&
+            <Grid
+              container
+              direction='column'
+              justify="center"
+              alignItems="center"
+            >
+              <Typography>The location</Typography>
+
+
+              <Map
+                center={[description.coords.lat, description.coords.lng]}
+                zoom={15}>
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                />
+
+                <Marker
+                  position={[description.coords.lat, description.coords.lng]}
+                />
+
+
+              </Map>
+
+            </Grid>
+            }
 
           </Card>
         </Grid>

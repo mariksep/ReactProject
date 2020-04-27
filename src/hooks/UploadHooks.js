@@ -8,6 +8,7 @@ const useUploadForm = (callback) => {
     dataUrl: '',
     type: '',
     contact: '',
+    coords: '',
   });
 
   const [error, setError] = useState(false);
@@ -49,6 +50,16 @@ const useUploadForm = (callback) => {
     });
   };
 
+  const handleCoordsChange = (event) => {
+    setInputs((inputs) => {
+      return {
+        ...inputs,
+        coords: {lat: event.latlng.lat,
+          lng: event.latlng.lng},
+      };
+    });
+  };
+
   const handleRadioChange = (event) => {
     event.persist();
     setInputs((inputs) => {
@@ -64,6 +75,7 @@ const useUploadForm = (callback) => {
     handleInputChange,
     handleFileChange,
     handleRadioChange,
+    handleCoordsChange,
     inputs,
     setInputs,
     error,

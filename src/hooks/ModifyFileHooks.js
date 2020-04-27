@@ -9,6 +9,7 @@ const useModifyFileForm = (callback) => {
         dataUrl: '',
         type: '',
         contact: '',
+        coords: '',
       },
   );
   const handleSubmit = (event) =>{
@@ -26,6 +27,16 @@ const useModifyFileForm = (callback) => {
       };
     });
   };
+  const handleCoordsChange = (event) => {
+    setInputs((inputs) => {
+      return {
+        ...inputs,
+        coords: {lat: event.latlng.lat,
+          lng: event.latlng.lng},
+      };
+    });
+  };
+
 
 
 
@@ -34,6 +45,7 @@ const useModifyFileForm = (callback) => {
     setInputs,
     handleSubmit,
     handleInputChange,
+    handleCoordsChange,
 
   };
 };

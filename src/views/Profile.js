@@ -61,9 +61,7 @@ const Profile = ({history}) => {
   const showUpdate = () => {
     setShow(!show);
   };
-  const handleClose = () => {
-    setShow(false);
-  };
+
   return (
     <>
       <BackButton /><Grid
@@ -161,14 +159,18 @@ const Profile = ({history}) => {
 
                     <Modal
                       open={show}
-                      onClose={handleClose}
+
                     ><ProfileForm/></Modal>
 
 
                   </Card>
                 </Grid>
                 <Grid item>
-                  <h2>Jobs that I have posted </h2>
+                  <Grid container
+                    justify="center"
+                    alignItems="center">
+                    <h2>Jobs that I have posted </h2>
+                  </Grid>
                   <MyMediaRow/>
                 </Grid>
 
