@@ -9,14 +9,14 @@ import MyMediaFileRow from './MyMediaFileRow';
 
 const useStyles = makeStyles({
 
-  media:{
+  media: {
 
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
+    display: 'flex',
+
+
 
   },
+
 
 });
 
@@ -41,33 +41,57 @@ const MyMediaRow = () => {
   const needhelpMyRow= needhelp.filter((item)=>item.user_id===user.user_id);
 
   return (
-    <div className={classes.media} >
-      <h1>Helper Jobs</h1>
 
+    <div className={classes.media}>
       <Grid
-        className={classes.container}>
-        {helperMyRow.length>0&&
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center">
+        <Grid item >
+          <h1>Helper Jobs</h1>
+        </Grid>
+        <Grid
+          item
+          className={classes.container}>
+          {helperMyRow.length>0&&
         helperMyRow.map((file, index)=>{
           return (
 
-            <MyMediaFileRow key={file.file_id}
+            <MyMediaFileRow
+
+              key={file.file_id}
               file={file} index={index}/>
 
           );
         })
-        }
+          }
+        </Grid>
       </Grid>
-      <h1>Need help Jobs</h1>
       <Grid
-        className={classes.container}>
-        {needhelpMyRow.length>0&&
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <Grid item>
+          <h1>Need help Jobs</h1>
+        </Grid>
+        <Grid
+          item
+          className={classes.container}>
+          {needhelpMyRow.length>0&&
         needhelpMyRow.map((file, index)=>{
-          return (<MyMediaFileRow key={file.file_id}
+          return (<MyMediaFileRow
+
+            key={file.file_id}
             file={file} index={index}/>);
         })
-        }
+          }
+        </Grid>
       </Grid>
     </div>
+
   );
 };
 

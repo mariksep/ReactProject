@@ -17,6 +17,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
 import { uploadFile } from '../hooks/ApiHooks';
 import { makeStyles } from '@material-ui/core/styles';
+import { Map, TileLayer, Marker } from 'react-leaflet';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,6 +81,7 @@ const Upload = ({ history }) => {
         description: JSON.stringify({
           desc: inputs.description,
           contact: inputs.contact,
+          coords: inputs.coords,
         }),
         file: inputs.file,
       };
@@ -111,6 +113,7 @@ const Upload = ({ history }) => {
     handleSubmit,
     handleFileChange,
     handleRadioChange,
+    handleCoordsChange,
   } = useUploadForm(doUpload);
 
   console.log('ips', inputs);
@@ -134,6 +137,8 @@ const Upload = ({ history }) => {
     );
 
     if (inputs.file !== null) {
+      console.log(inputs.file);
+
       if (inputs.file.type.includes('image')) {
         reader.readAsDataURL(inputs.file);
       } else {
@@ -277,6 +282,28 @@ const Upload = ({ history }) => {
                   {helperText}
                 </FormHelperText>
               </Grid>
+              <Grid
+                container
+                direction='column'
+                justify='center'
+                alignItems='center'
+              >
+                <Typography>You can display the location (optional)</Typography>
+                <Map
+                  onClick={handleCoordsChange}
+                  center={[60.169857, 24.938379]}
+                  zoom={11}
+                >
+                  <TileLayer
+                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  />
+                  {inputs.coords.length !== 0 && (
+                    <Marker position={[inputs.coords.lat, inputs.coords.lng]} />
+                  )}
+                </Map>
+              </Grid>
+
               <Grid item xs={12}>
                 <Button
                   fullWidth

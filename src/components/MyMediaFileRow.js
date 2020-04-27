@@ -2,9 +2,8 @@ import React, {useContext, useEffect} from 'react';
 import {Card,
   Grid,
   IconButton,
-  GridList,
-  GridListTile,
-  GridListTileBar,
+
+  Typography,
 } from '@material-ui/core';
 import {deleteFile, useMediaByTag, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
@@ -13,36 +12,44 @@ import BrushIcon from '@material-ui/icons/Brush';
 import {Link as RouterLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {
     position: 'relative',
+    margin: '2rem',
+    width: '30rem',
 
+  },
+  img: {
+    width: '100rem',
   },
 
   icons: {
     position: 'absolute',
-    top: '50%',
+    top: '0',
     left: '0',
-    backgroundColor: 'white',
+    height: '100%',
+    backgroundColor: 'rgba(255,255,255,0.7)',
   },
   icon: {
     color: 'black',
   },
+  desc: {
+    width: '10%',
+  },
 
 });
 
-
-// eslint-disable-next-line react/prop-types
 const MyMediaFileRow =({file, index}) => {
+  const item = JSON.parse(file.description);
   const classes = useStyles();
   return (
-    <Grid className={classes.gridi}>
+    <Grid>
       <Card className={classes.card} key={index}>
         <Grid className={classes.img} >
-          <img src={baseUrl +file.thumbnails.w320}/>
+          <img src={baseUrl +file.thumbnails.w640}/>
         </Grid>
         <Grid
           className={classes.icons}
@@ -56,9 +63,7 @@ const MyMediaFileRow =({file, index}) => {
             component={RouterLink}
             to={'/SingleFile/'+file.file_id}>
             <ZoomInIcon
-              className={classes.icon}
-
-              fontSize='medium'/>Zoom
+              className={classes.icon}/>Zoom
           </IconButton>
 
           <IconButton
@@ -67,8 +72,9 @@ const MyMediaFileRow =({file, index}) => {
             to={'/Modify/'+file.file_id}>
             <BrushIcon
               className={classes.icon}
-
-              fontSize='medium'/>Modify</IconButton>
+            />
+              Modify
+          </IconButton>
           <IconButton
             aria-label={`delete file`}
             component={RouterLink}
@@ -83,9 +89,22 @@ const MyMediaFileRow =({file, index}) => {
               }
 
             }
-            to={'/Profile'}>Delete</IconButton>
+            to={'/Profile'}>
+            <DeleteIcon
+              className={classes.icon}
+            /> Delete
+          </IconButton>
 
         </Grid>
+
+        <Grid container
+          direction="column"
+          justify="center"
+          alignItems="center">
+          <Typography component='p'>Description: {item.desc}</Typography>
+          <Typography component='p'>Contact information: {item.contact}</Typography>
+        </Grid>
+
       </Card>
     </Grid>
   );
