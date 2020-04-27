@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useMediaByTag, useSingleMedia } from '../hooks/ApiHooks';
+import { useMediaByTag } from '../hooks/ApiHooks';
 import { makeStyles } from '@material-ui/core';
 import MediaRow from './MediaRow';
 
@@ -23,11 +23,11 @@ const MediaTable = ({ type }) => {
     <div className={classes.root}>
       {type === 'nhahelper' &&
         mediaHelpers.map((file) => (
-          <MediaRow key={file.file_id} file={file} type={'nhahelper'} />
+          <MediaRow key={file.file_id} file={file} type={type} />
         ))}
       {type === 'nhaneedhelp' &&
         mediaHelpNeeded.map((file) => (
-          <MediaRow key={file.file_id} file={file} type={'nhaneedhelp'} />
+          <MediaRow key={file.file_id} file={file} type={type} />
         ))}
     </div>
   );

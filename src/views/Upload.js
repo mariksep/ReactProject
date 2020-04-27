@@ -206,7 +206,7 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='Where do you need help?'
+                  label='How can you help or where do you need help?'
                   type='text'
                   name='title'
                   value={inputs.title}
@@ -221,7 +221,7 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='Provide a detailed description'
+                  label='Provide a detailed description about your task'
                   name='description'
                   value={inputs.description}
                   onChange={handleInputChange}

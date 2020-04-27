@@ -144,7 +144,19 @@ const useMediaByTag = (tag) => {
     const items = await Promise.all(
       json.map(async (item) => {
         const response = await fetch(baseUrl + 'media/' + item.file_id);
-        return await response.json();
+        // Lisää käyttäjän tiedot ja avatar
+        const itemi = await response.json();
+        const userResponse = await getUser(
+          itemi.user_id,
+          localStorage.getItem('token')
+        );
+        itemi.user = userResponse;
+        const avatarFile = await getAvatarImage(
+          itemi.user_id,
+          localStorage.getItem('token')
+        );
+        itemi.avatar = avatarFile;
+        return await itemi;
       })
     );
     setData(items);

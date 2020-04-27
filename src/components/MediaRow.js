@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   makeStyles,
-  CardActionArea,
   CardMedia,
   CardContent,
   Typography,
   CardActions,
-  Button,
   Card,
   CardHeader,
   Avatar,
@@ -23,21 +21,40 @@ const useStyles = makeStyles(() => ({
   },
   cardContainer: {
     width: '30vw',
-    textAlign: 'center',
     margin: '1rem',
+    '@media (max-width:950px)': {
+      width: '50vw',
+    },
+    '@media (max-width:600px)': {
+      width: '90vw',
+    },
   },
   cardContent: {
     padding: 0,
   },
   cardHeader: {
-    padding: '1rem',
+    padding: '0.5rem',
+    textAlign: 'center',
   },
   icon: {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    width: '2rem',
-    height: '2rem',
+    width: '2.7rem',
+    height: '2.7rem',
+  },
+  description: {
+    margin: '1rem',
+  },
+  subheader: {
+    color: '#6b6b6b',
+  },
+  avatar: {
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    width: '3rem',
+    height: '3rem',
   },
 }));
 
@@ -50,12 +67,10 @@ const MediaRow = ({ file, type }) => {
     thumb = mediaUrl + file.thumbnails.w320;
   }
 
-  let helpIcon = useSingleMedia(2045);
-  let jobIcon = useSingleMedia(2046);
-  let contactIcon = useSingleMedia(2047);
-
+  const helpIcon = useSingleMedia(2045);
+  const jobIcon = useSingleMedia(2046);
+  const contactIcon = useSingleMedia(2047);
   let icons;
-
   if (helpIcon && jobIcon && contactIcon) {
     icons = {
       helpIcon: helpIcon.thumbnails.w160,
@@ -64,11 +79,29 @@ const MediaRow = ({ file, type }) => {
     };
   }
 
+  const profileIndex = file.avatar.length - 1;
+  let profilePicture = 'http://via.placeholder.com/320x200.png?text=User';
+  if (file.avatar.length > 0) {
+    profilePicture = mediaUrl + file.avatar[profileIndex].filename;
+  }
+
   return (
     <>
       {icons !== undefined && (
         <Card className={classes.cardContainer}>
-          <CardHeader avatar={<Avatar aria-label='user'></Avatar>} />
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label='user'
+                style={{
+                  backgroundImage: `url(${profilePicture})`,
+                }}
+                className={classes.avatar}
+              ></Avatar>
+            }
+            title={file.user.username}
+            subheader={file.user.full_name}
+          />
           <CardContent className={classes.cardContent}>
             <Typography
               gutterBottom
@@ -86,36 +119,62 @@ const MediaRow = ({ file, type }) => {
             <div
               style={{
                 display: 'flex',
+                alignItems: 'center',
               }}
             >
               {type === 'nhahelper' && (
-                <div
-                  style={{
-                    backgroundImage: `url(${mediaUrl}${icons.helpIcon})`,
-                  }}
-                  className={classes.icon}
-                ></div>
+                <>
+                  <div
+                    style={{
+                      backgroundImage: `url(${mediaUrl}${icons.helpIcon})`,
+                      margin: '1rem',
+                    }}
+                    className={classes.icon}
+                  ></div>
+                  <Typography
+                    variant='h6'
+                    component='h3'
+                    className={classes.subheader}
+                  >
+                    I want to help you!
+                  </Typography>
+                </>
               )}
               {type === 'nhaneedhelp' && (
-                <div
-                  style={{
-                    backgroundImage: `url(${mediaUrl}${icons.jobIcon})`,
-                  }}
-                  className={classes.icon}
-                ></div>
+                <>
+                  <div
+                    style={{
+                      backgroundImage: `url(${mediaUrl}${icons.jobIcon})`,
+                      margin: '1rem',
+                    }}
+                    className={classes.icon}
+                  ></div>
+                  <Typography
+                    variant='h6'
+                    component='h3'
+                    className={classes.subheader}
+                  >
+                    I need help!
+                  </Typography>
+                </>
               )}
-              <Typography variant='body1' component='h3'>
-                {description.desc}
-              </Typography>
             </div>
+            <Typography
+              variant='body1'
+              component='h4'
+              className={classes.description}
+            >
+              {description.desc}
+            </Typography>
             <CardActions>
               <div
                 style={{
                   backgroundImage: `url(${mediaUrl}${icons.contactIcon})`,
+                  margin: '0.3rem',
                 }}
                 className={classes.icon}
               ></div>
-              <Typography variant='body1' component='h3'>
+              <Typography variant='body1' component='h4'>
                 {description.contact}
               </Typography>
             </CardActions>
