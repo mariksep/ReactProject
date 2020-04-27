@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useMediaByTag } from '../hooks/ApiHooks';
-import {
-  GridList,
-  GridListTile,
-  ListSubheader,
-  makeStyles,
-  Card,
-} from '@material-ui/core';
+import { useMediaByTag, useSingleMedia } from '../hooks/ApiHooks';
+import { makeStyles } from '@material-ui/core';
 import MediaRow from './MediaRow';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,13 +12,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
-    width: '100%',
-    height: '100%',
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
 }));
 
 const MediaTable = ({ type }) => {
@@ -34,16 +21,14 @@ const MediaTable = ({ type }) => {
 
   return (
     <div className={classes.root}>
-      <Card>
-        {type === 'nhahelper' &&
-          mediaHelpers.map((file) => (
-            <MediaRow key={file.file_id} file={file} />
-          ))}
-        {type === 'nhaneedhelp' &&
-          mediaHelpNeeded.map((file) => (
-            <MediaRow key={file.file_id} file={file} />
-          ))}
-      </Card>
+      {type === 'nhahelper' &&
+        mediaHelpers.map((file) => (
+          <MediaRow key={file.file_id} file={file} type={'nhahelper'} />
+        ))}
+      {type === 'nhaneedhelp' &&
+        mediaHelpNeeded.map((file) => (
+          <MediaRow key={file.file_id} file={file} type={'nhaneedhelp'} />
+        ))}
     </div>
   );
 };

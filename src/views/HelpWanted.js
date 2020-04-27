@@ -1,17 +1,26 @@
 import React from 'react';
 import BackButton from '../components/BackButton';
-import { Typography } from '@material-ui/core';
-import { useMediaByTag } from '../hooks/ApiHooks';
+import { Typography, makeStyles } from '@material-ui/core';
 import MediaTable from '../components/MediaTable';
 
-const HelpWanted = () => {
-  const picArray = useMediaByTag('nhaneedhelp');
-  console.log(picArray);
+const useStyles = makeStyles((theme) => ({
+  header: {
+    textAlign: 'center',
+    marginBottom: '4rem',
+  },
+}));
 
+const HelpWanted = () => {
+  const classes = useStyles();
   return (
     <>
       <BackButton />
-      <Typography component='h1' variant='h2' gutterBottom>
+      <Typography
+        component='h1'
+        variant='h2'
+        gutterBottom
+        className={classes.header}
+      >
         HelpWanted
       </Typography>
       <MediaTable type={'nhaneedhelp'} />

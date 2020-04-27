@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import BackButton from '../components/BackButton';
 import {
@@ -13,10 +13,10 @@ import {
   Grid,
   CircularProgress,
 } from '@material-ui/core';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
-import {uploadFile} from '../hooks/ApiHooks';
-import {makeStyles} from '@material-ui/core/styles';
+import { uploadFile } from '../hooks/ApiHooks';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   inputs: {
-    'padding': '1rem',
-    'textAlign': 'center',
-    'width': '60vw',
+    padding: '1rem',
+    textAlign: 'center',
+    width: '60vw',
     '@media (max-width:780px)': {
       width: '90vw',
     },
@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.4rem',
   },
   uploadBtn: {
-    'backgroundColor': '#3F51B5',
-    'color': 'white',
-    'marginTop': '2rem',
-    'marginBottom': '4rem',
+    backgroundColor: '#3F51B5',
+    color: 'white',
+    marginTop: '2rem',
+    marginBottom: '4rem',
     '&:hover': {
       backgroundColor: 'white',
       color: '#3F51B5',
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Upload = ({history}) => {
+const Upload = ({ history }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -84,8 +84,8 @@ const Upload = ({history}) => {
         file: inputs.file,
       };
 
-      const tag_name = inputs.type;
-      const result = await uploadFile(uploadObject, tag_name);
+      const tagName = inputs.type;
+      const result = await uploadFile(uploadObject, tagName);
       console.log('filen lataus onnistui', result);
 
       // Siirry sille sivulle mitä tyyppiä postaus oli
@@ -120,17 +120,17 @@ const Upload = ({history}) => {
     const reader = new FileReader();
 
     reader.addEventListener(
-        'load',
-        () => {
+      'load',
+      () => {
         // convert image file to base64 string
-          setInputs((inputs) => {
-            return {
-              ...inputs,
-              dataUrl: reader.result,
-            };
-          });
-        },
-        false,
+        setInputs((inputs) => {
+          return {
+            ...inputs,
+            dataUrl: reader.result,
+          };
+        });
+      },
+      false
     );
 
     if (inputs.file !== null) {
