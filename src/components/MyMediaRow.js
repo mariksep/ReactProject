@@ -1,12 +1,28 @@
 import React, {useContext, useEffect} from 'react';
-import {Grid, } from '@material-ui/core';
-import { useMediaByTag, userInformation} from '../hooks/ApiHooks';
+import {Grid, GridListTile} from '@material-ui/core';
+import {useMediaByTag, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
+import {makeStyles} from '@material-ui/core/styles';
 
 
 import MyMediaFileRow from './MyMediaFileRow';
 
+const useStyles = makeStyles({
+
+  media:{
+
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+  },
+
+});
+
 const MyMediaRow = () => {
+  const classes = useStyles();
+
   const [user, setUser] = useContext(MediaContext);
   useEffect(() => {
     const checkUser = async () => {
@@ -25,29 +41,29 @@ const MyMediaRow = () => {
   const needhelpMyRow= needhelp.filter((item)=>item.user_id===user.user_id);
 
   return (
-    <div>
+    <div className={classes.media} >
       <h1>Helper Jobs</h1>
+
       <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center">
+        className={classes.container}>
         {helperMyRow.length>0&&
         helperMyRow.map((file, index)=>{
+          return (
 
-          return (<MyMediaFileRow key={file.file_id} file={file} index={index}/>);
+            <MyMediaFileRow key={file.file_id}
+              file={file} index={index}/>
+
+          );
         })
         }
       </Grid>
       <h1>Need help Jobs</h1>
       <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center">
+        className={classes.container}>
         {needhelpMyRow.length>0&&
         needhelpMyRow.map((file, index)=>{
-          return (<MyMediaFileRow key={file.file_id} file={file} index={index}/>);
+          return (<MyMediaFileRow key={file.file_id}
+            file={file} index={index}/>);
         })
         }
       </Grid>

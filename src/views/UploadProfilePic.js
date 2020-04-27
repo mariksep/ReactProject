@@ -6,6 +6,7 @@ import {uploadProfilePic, userInformation} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import {withRouter} from 'react-router-dom';
 import {Button} from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 const UploadProfilePic = ({history}) => {
@@ -23,20 +24,23 @@ const UploadProfilePic = ({history}) => {
 
   const tag = 'nha_profile'+ user.user_id;
   const doUpload = async () =>{
-    const uploadObject={
-      title: 'kok',
-      description: 'kok',
-      file: inputsPic.file,
+    try {
+      const uploadObject = {
+        title: 'kok',
+        description: 'kok',
+        file: inputsPic.file,
 
-    };
-    const result = await uploadProfilePic(uploadObject,
-        tag, user.user_id);
-    window.location.reload();
+      };
+      const result = await uploadProfilePic(uploadObject,
+          tag, user.user_id);
+      window.location.reload();
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   const {
     inputsPic,
-    setInputsPic,
     handleSubmitPicture,
     handleFileChangePicture,
   }= useUploadProfileForm(doUpload);
@@ -46,12 +50,20 @@ const UploadProfilePic = ({history}) => {
       <h1>Update your profile picture</h1>
       <ValidatorForm onSubmit={handleSubmitPicture}>
         <input
-          type='file'
-          name='file'
-          accept='image/*,video/*,audio/*'
           onChange={handleFileChangePicture}
+          type="file"
+          name="file"
+          accept="image/*,video/*,audio/*"
+          validators={['maxFileSize:'+5*1024*1024,
+            'allowedExtensions:image/*,video/*,audio/*',
+          ]}
+          errormessages={['this field is required',
+          ]}
+
         />
-        <Button type='submit'>save</Button>
+        <Button
+          fullWidth
+          type='submit'>save</Button>
       </ValidatorForm>
     </>
   );
