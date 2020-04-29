@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -43,8 +43,8 @@ const useSingleMedia = (id) => {
     const response = await fetch(baseUrl + 'media/' + fileid);
     const item = await response.json();
     const userResponse = await getUser(
-      item.user_id,
-      localStorage.getItem('token')
+        item.user_id,
+        localStorage.getItem('token'),
     );
     item.user = userResponse;
     console.log(item);
@@ -91,7 +91,7 @@ const uploadFile = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return { json, tagJson };
+    return {json, tagJson};
   } catch (e) {
     throw new Error(e.message);
   }
@@ -142,22 +142,22 @@ const useMediaByTag = (tag) => {
     const json = await response.json();
     // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
     const items = await Promise.all(
-      json.map(async (item) => {
-        const response = await fetch(baseUrl + 'media/' + item.file_id);
-        // Lisää käyttäjän tiedot ja avatar
-        const itemi = await response.json();
-        const userResponse = await getUser(
-          itemi.user_id,
-          localStorage.getItem('token')
-        );
-        itemi.user = userResponse;
-        const avatarFile = await getAvatarImage(
-          itemi.user_id,
-          localStorage.getItem('token')
-        );
-        itemi.avatar = avatarFile;
-        return await itemi;
-      })
+        json.map(async (item) => {
+          const response = await fetch(baseUrl + 'media/' + item.file_id);
+          // Lisää käyttäjän tiedot ja avatar
+          const itemi = await response.json();
+          const userResponse = await getUser(
+              itemi.user_id,
+              localStorage.getItem('token'),
+          );
+          itemi.user = userResponse;
+          const avatarFile = await getAvatarImage(
+              itemi.user_id,
+              localStorage.getItem('token'),
+          );
+          itemi.avatar = avatarFile;
+          return await itemi;
+        }),
     );
     setData(items);
   };
@@ -223,7 +223,7 @@ const uploadProfilePic = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return { json, tagJson };
+    return {json, tagJson};
   } catch (e) {
     throw new Error(e.message);
   }

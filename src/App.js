@@ -26,6 +26,7 @@ const App = ({ history }) => {
             <Route path='/profile' component={Profile} />
             <Route path='/SingleFile/:id' component={SingleFile} />
             <Route path='/Modify/:id' component={Modify} />
+
           </Switch>
         </MediaProvider>
       </Router>

@@ -10,7 +10,7 @@ import {
   CardHeader,
   Avatar,
 } from '@material-ui/core';
-import { useSingleMedia } from '../hooks/ApiHooks';
+import {useSingleMedia} from '../hooks/ApiHooks';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -20,8 +20,8 @@ const useStyles = makeStyles(() => ({
     width: '100%',
   },
   cardContainer: {
-    width: '30vw',
-    margin: '1rem',
+    'width': '30vw',
+    'margin': '1rem',
     '@media (max-width:950px)': {
       width: '50vw',
     },
@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MediaRow = ({ file, type }) => {
+const MediaRow = ({file, type}) => {
   const description = JSON.parse(file.description);
   console.log('file', file);
   const classes = useStyles();
