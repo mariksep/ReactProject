@@ -11,6 +11,7 @@ import Profile from './views/Profile';
 import PropTypes from 'prop-types';
 import SingleFile from './views/SingleFile';
 import Modify from './views/Modify';
+import Logout from './views/Logout';
 
 const App = ({history}) => {
 
@@ -27,7 +28,7 @@ const App = ({history}) => {
             <Route path='/profile' component={Profile} />
             <Route path='/SingleFile/:id' component={SingleFile} />
             <Route path='/Modify/:id' component={Modify} />
-
+            <Route path='/logout' component={Logout} />
           </Switch>
         </MediaProvider>
       </Router>
