@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid #3F51B5',
     },
   },
+  map: {
+    borderRadius: '15px',
+    margin: '0.5rem',
+  },
   textHelp: {
     fontWeight: 'bold',
   },
@@ -292,6 +296,7 @@ const Upload = ({ history }) => {
               >
                 <Typography>You can display the location (optional)</Typography>
                 <Map
+                  className={classes.map}
                   onClick={handleCoordsChange}
                   center={[60.169857, 24.938379]}
                   zoom={11}

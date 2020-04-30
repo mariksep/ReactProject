@@ -14,6 +14,8 @@ import { Icon } from 'leaflet';
 import iconHelper from './settings_money_work-512.png';
 import iconWanted from './9-512.png';
 import Nav from '../components/Nav';
+import CommentIcon from '@material-ui/icons/Comment';
+
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
@@ -23,6 +25,8 @@ const useStyles = makeStyles({
     width: '95vw',
     height: '85vh',
     marginTop: '5rem',
+    borderRadius: '15px',
+    margin: '0.5rem',
   },
   popUpAvatar: {
     backgroundSize: 'cover',
@@ -52,9 +56,7 @@ const Media = () => {
 
   return (
     <>
-      <>
-        <Nav />
-      </>
+      <Nav />
       <Grid container justify='center' alignItems='center'>
         <Map className={classes.map} center={[60.169857, 24.938379]} zoom={13}>
           <TileLayer
@@ -101,7 +103,9 @@ const Media = () => {
                       <Typography component='h6' variant='h6'>
                         {file.title}
                       </Typography>
+                      <CommentIcon />
                       <Typography component='p' variant='body2'>
+                        {' '}
                         {popupDesc}
                         <IconButton
                           aria-label={`info about ${file.title}`}
@@ -157,6 +161,7 @@ const Media = () => {
                       <Typography component='h6' variant='h6'>
                         {file.title}
                       </Typography>
+                      <CommentIcon />
                       <Typography component='p' variant='body2'>
                         {popupDesc}
                         <IconButton

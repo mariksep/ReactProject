@@ -4,14 +4,16 @@ import useLoginForm from '../hooks/LoginHooks';
 import { login } from '../hooks/ApiHooks';
 import { MediaContext } from '../contexts/MediaContext';
 import { withRouter } from 'react-router-dom';
-import { TextField, Button, Grid } from '@material-ui/core/';
+import { TextField, Button, Grid, InputAdornment } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
     padding: '1em',
     textAlign: 'center',
-    width: '60vw',
+    width: '40vw',
   },
 }));
 
@@ -31,6 +33,7 @@ const LoginForm = ({ history }) => {
       history.push('/media');
     } catch (e) {
       console.log(e.message);
+      return alert('The username or password incorrect — Try again!');
       // throw new Error(e.message);
     }
   };
@@ -65,6 +68,13 @@ const LoginForm = ({ history }) => {
                 name='username'
                 placeholder='username'
                 value={inputs.username}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <PersonOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid item>
@@ -75,10 +85,17 @@ const LoginForm = ({ history }) => {
                 name='password'
                 placeholder='password'
                 value={inputs.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid item>
-              <Button variant='outlined' size='large' type='submit'>
+              <Button size='large' type='submit'>
                 Login
               </Button>
             </Grid>

@@ -38,6 +38,9 @@ const useStyles = makeStyles({
     height: 200,
     width: '100%',
   },
+  icon: {
+    color: '#442C2E',
+  },
 });
 
 const Profile = ({ history }) => {
@@ -82,90 +85,54 @@ const Profile = ({ history }) => {
       </Grid>
 
       {user != null && (
-        <Grid container direction='row' justify='center' alignItems='center'>
-          <Grid
-            item
-            container
-            direction='row'
-            justify='center'
-            alignItems='center'
-          >
+        <>
+          <Grid container justify='center'>
             <Card className={classes.card}>
-              {avatar.length === 0 && (
-                <img
-                  src='http://placekitten.com/200/300'
-                  alt='default profile picture'
-                />
-              )}
-              {avatar.length > 0 && (
-                <img
-                  src={baseUrl + avatar[profileIndex].filename}
-                  alt='your profile picture'
-                />
-              )}
-              <>
-                <Grid container justify='center'>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.profilePic}
-                      image={profilePic}
-                      alt='Avatar image'
-                      title='Avatar image'
-                    ></CardMedia>
-                    <CardContent className={classes.cardContent}>
-                      <Grid container direction='column' justify='center'>
-                        <Grid item>
-                          <PersonOutlineIcon />
-                          <Typography component='p'>
-                            Username: {user.username}
-                          </Typography>
-                        </Grid>
+              <CardMedia
+                className={classes.profilePic}
+                image={profilePic}
+                alt='Avatar image'
+                title='Avatar image'
+              ></CardMedia>
+              <CardContent className={classes.cardContent}>
+                <Grid container direction='column' justify='center'>
+                  <Grid item>
+                    <PersonOutlineIcon className={classes.icon} />
+                    <Typography component='p'>
+                      Username: {user.username}
+                    </Typography>
+                  </Grid>
 
-                        <Grid item>
-                          <AlternateEmailIcon />
-                          <Typography component='p'>
-                            Email: {user.email}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <FaceIcon />
-                          <Typography component='p'>
-                            Full name:
-                            {user.full_name}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Button fullWidth onClick={showUpdate}>
-                        Change
-                      </Button>
-                    </CardContent>
-
-                    <Modal open={show}>
-                      <ProfileForm />
-                    </Modal>
-                  </Card>
+                  <Grid item>
+                    <AlternateEmailIcon className={classes.icon} />
+                    <Typography component='p'>Email: {user.email}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <FaceIcon className={classes.icon} />
+                    <Typography component='p'>
+                      Full name:
+                      {user.full_name}
+                    </Typography>
+                  </Grid>
                 </Grid>
+                <Button fullWidth onClick={showUpdate}>
+                  Change
+                </Button>
+              </CardContent>
 
-                <Grid container justify='center' alignItems='center'>
-                  <Typography component='h2' variant='h2'>
-                    Jobs that I have posted{' '}
-                  </Typography>
-                </Grid>
-                <MyMediaRow />
-              </>
-              )}
               <Modal open={show}>
                 <ProfileForm />
               </Modal>
             </Card>
           </Grid>
-          <Grid item>
-            <Grid container justify='center' alignItems='center'>
-              <h2>Jobs that I have posted </h2>
-            </Grid>
-            <MyMediaRow />
+
+          <Grid container justify='center' alignItems='center'>
+            <Typography component='h2' variant='h2'>
+              Jobs that I have posted{' '}
+            </Typography>
           </Grid>
-        </Grid>
+          <MyMediaRow />
+        </>
       )}
     </>
   );
