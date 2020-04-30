@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import BackButton from '../components/BackButton';
 import {
   Typography,
   Button,
@@ -19,6 +18,7 @@ import { uploadFile } from '../hooks/ApiHooks';
 import { makeStyles } from '@material-ui/core/styles';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import Nav from '../components/Nav';
+import { MediaContext } from '../contexts/MediaContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 const Upload = ({ history }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useContext(MediaContext);
 
   const doUpload = async () => {
     setLoading(true);
@@ -151,7 +152,7 @@ const Upload = ({ history }) => {
         });
       }
     }
-  }, [inputs.file, setInputs]);
+  }, [inputs.file, setInputs, setUser]);
 
   return (
     <div className={classes.root}>

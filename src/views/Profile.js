@@ -4,7 +4,16 @@ import BackButton from '../components/BackButton';
 import { MediaContext } from '../contexts/MediaContext';
 import { userInformation, getAvatarImage } from '../hooks/ApiHooks';
 import ProfileForm from '../components/ProfileForm';
-import { Card, Button, Grid, Typography, Modal } from '@material-ui/core';
+// eslint-disable-next-line max-len
+import {
+  Card,
+  Button,
+  Grid,
+  Typography,
+  Modal,
+  CardContent,
+  CardMedia,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MyMediaRow from '../components/MyMediaRow';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
@@ -15,20 +24,19 @@ import Nav from '../components/Nav';
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {
-    margin: '0.5em',
-    maxWidth: '30%',
+    width: '30vw',
+    height: '50%',
+    margin: '1rem',
+    '@media (max-width:950px)': {
+      width: '50vw',
+    },
+    '@media (max-width:600px)': {
+      width: '90vw',
+    },
   },
-  profile: {
-    width: '100vw',
-  },
-  item: {
-    width: '100vw',
-  },
-  button: {
-    Width: '100%',
-  },
-  p: {
-    padding: '0.5em',
+  profilePic: {
+    height: 200,
+    width: '100%',
   },
 });
 
@@ -59,12 +67,18 @@ const Profile = ({ history }) => {
   const showUpdate = () => {
     setShow(!show);
   };
+  let profilePic = 'http://placekitten.com/200/300';
+  if (avatar.length > 0) {
+    profilePic = baseUrl + avatar[profileIndex].filename;
+  }
 
   return (
     <>
       <Nav />
-      <Grid container justify='center' alignItems='center'>
-        <h1>Profile</h1>
+      <Grid container justify='center'>
+        <Typography component='h1' variant='h2'>
+          Profile
+        </Typography>
       </Grid>
 
       {user != null && (
@@ -89,61 +103,57 @@ const Profile = ({ history }) => {
                   alt='your profile picture'
                 />
               )}
+              <>
+                <Grid container justify='center'>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.profilePic}
+                      image={profilePic}
+                      alt='Avatar image'
+                      title='Avatar image'
+                    ></CardMedia>
+                    <CardContent className={classes.cardContent}>
+                      <Grid container direction='column' justify='center'>
+                        <Grid item>
+                          <PersonOutlineIcon />
+                          <Typography component='p'>
+                            Username: {user.username}
+                          </Typography>
+                        </Grid>
 
-              <Grid
-                container
-                direction='column'
-                justify='center'
-                alignItems='center'
-              >
-                <Grid item>
-                  <Grid
-                    container
-                    direction='row'
-                    justify='center'
-                    alignItems='center'
-                    className={classes.p}
-                  >
-                    <PersonOutlineIcon />
-                    <Typography component='p'>
-                      Username: {user.username}
-                    </Typography>
-                  </Grid>
+                        <Grid item>
+                          <AlternateEmailIcon />
+                          <Typography component='p'>
+                            Email: {user.email}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <FaceIcon />
+                          <Typography component='p'>
+                            Full name:
+                            {user.full_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Button fullWidth onClick={showUpdate}>
+                        Change
+                      </Button>
+                    </CardContent>
+
+                    <Modal open={show}>
+                      <ProfileForm />
+                    </Modal>
+                  </Card>
                 </Grid>
 
-                <Grid item>
-                  <Grid
-                    container
-                    direction='row'
-                    justify='center'
-                    alignItems='center'
-                    className={classes.p}
-                  >
-                    <AlternateEmailIcon />
-                    <Typography component='p'>Email: {user.email}</Typography>
-                  </Grid>
+                <Grid container justify='center' alignItems='center'>
+                  <Typography component='h2' variant='h2'>
+                    Jobs that I have posted{' '}
+                  </Typography>
                 </Grid>
-                <Grid item>
-                  <Grid
-                    container
-                    direction='row'
-                    justify='center'
-                    alignItems='center'
-                    className={classes.p}
-                  >
-                    <FaceIcon />
-                    <Typography component='p'>
-                      Full name: {user.full_name}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item className={classes.item}>
-                <Button className={classes.button} onClick={showUpdate}>
-                  Change
-                </Button>
-              </Grid>
-
+                <MyMediaRow />
+              </>
+              )}
               <Modal open={show}>
                 <ProfileForm />
               </Modal>

@@ -2,39 +2,57 @@ import React, {useContext, useEffect} from 'react';
 import {Card,
   Grid,
   IconButton,
-
+  CardMedia,
   Typography,
+  CardContent,
 } from '@material-ui/core';
-import {deleteFile, useMediaByTag, userInformation} from '../hooks/ApiHooks';
-import {MediaContext} from '../contexts/MediaContext';
+import {
+  deleteFile,
+} from '../hooks/ApiHooks';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
 import BrushIcon from '@material-ui/icons/Brush';
 import {Link as RouterLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import CommentIcon from '@material-ui/icons/Comment';
 
+
+const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {
-    position: 'relative',
-    margin: '2rem',
-    width: '30rem',
+    'position': 'relative',
+    'width': '30vw',
 
+    'margin': '1rem',
+    '@media (max-width:950px)': {
+      width: '50vw',
+    },
+    '@media (max-width:600px)': {
+      width: '90vw',
+    },
   },
-  img: {
-    width: '100rem',
+  cardmedia: {
+    height: 200,
+    width: '100%',
+  },
+  contact: {
+    margin: '1rem',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'contain',
+    width: '2.7rem',
+    height: '2.7rem',
   },
 
-  icons: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    height: '100%',
-    backgroundColor: 'rgba(255,255,255,0.7)',
-  },
   icon: {
     color: 'black',
+
+  },
+  iconContact: {
+    marginRight: '1em',
   },
   desc: {
     width: '10%',
@@ -43,70 +61,92 @@ const useStyles = makeStyles({
 });
 
 const MyMediaFileRow =({file, index}) => {
+  console.log(file);
   const item = JSON.parse(file.description);
   const classes = useStyles();
+  let cardmedia= 'http://placekitten.com/200/300';
+  if (file.thumbnails) {
+    cardmedia =baseUrl +file.thumbnails.w320;
+  }
+
+
   return (
-    <Grid>
+    <>
       <Card className={classes.card} key={index}>
-        <Grid className={classes.img} >
-          <img src={baseUrl +file.thumbnails.w640}/>
-        </Grid>
-        <Grid
-          className={classes.icons}
-          container
-          direction="row"
-          justify="center"
-          alignItems="center">
+        <CardContent>
+          <Typography
+            component='h5'
+            variant='h5'
+          >{file.title}</Typography>
+        </CardContent>
+        <CardMedia
+          className={classes.cardmedia}
+          image={cardmedia}
+          alt="Post image"
+          title=" Post image"
+        >
+        </CardMedia>
+        <CardContent>
+          <Grid
+            container
+            direction="row">
+            <CommentIcon/>
+            <Typography component='p'> {item.desc}</Typography>
+          </Grid>
+          <Grid
+            container
+            direction="row">
+            <ContactMailIcon className={classes.iconContact}/>
+            <Typography component='p'>
+            contact: {item.contact}</Typography>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center">
 
-          <IconButton
-            aria-label={`info about ${file.title}`}
-            component={RouterLink}
-            to={'/SingleFile/'+file.file_id}>
-            <ZoomInIcon
-              className={classes.icon}/>Zoom
-          </IconButton>
+            <IconButton
+              aria-label={`info about ${file.title}`}
+              component={RouterLink}
+              to={'/SingleFile/'+file.file_id}>
+              <ZoomInIcon
+                className={classes.icon}/>Zoom
+            </IconButton>
 
-          <IconButton
-            component={RouterLink}
-            aria-label={`Modify file`}
-            to={'/Modify/'+file.file_id}>
-            <BrushIcon
-              className={classes.icon}
-            />
+            <IconButton
+              component={RouterLink}
+              aria-label={`Modify file`}
+              to={'/Modify/'+file.file_id}>
+              <BrushIcon
+                className={classes.icon}
+              />
               Modify
-          </IconButton>
-          <IconButton
-            aria-label={`delete file`}
-            component={RouterLink}
-            onClick={
-              ()=>{
-                const delOK= window.confirm(`Do you want to delete
+            </IconButton>
+            <IconButton
+              aria-label={`delete file`}
+              component={RouterLink}
+              onClick={
+                ()=>{
+                  const delOK= window.confirm(`Do you want to delete
                     ${file.title} post?` );
-                if (delOK) {
-                  deleteFile(file.file_id);
-                  window.location.reload();
+                  if (delOK) {
+                    deleteFile(file.file_id);
+                    window.location.reload();
+                  }
                 }
+
               }
-
-            }
-            to={'/Profile'}>
-            <DeleteIcon
-              className={classes.icon}
-            /> Delete
-          </IconButton>
-
-        </Grid>
-
-        <Grid container
-          direction="column"
-          justify="center"
-          alignItems="center">
-          <Typography component='p'>Description: {item.desc}</Typography>
-          <Typography component='p'>Contact information: {item.contact}</Typography>
-        </Grid>
+              to={'/Profile'}>
+              <DeleteIcon
+                className={classes.icon}
+              /> Delete
+            </IconButton>
+          </Grid>
+        </CardContent>
 
       </Card>
-    </Grid>
+    </>
   );
 };
 

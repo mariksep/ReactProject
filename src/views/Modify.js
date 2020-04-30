@@ -47,6 +47,8 @@ const Modify = ({history, match}) => {
         }),
         file: inputs.file,
       };
+      console.log(modifyObject);
+      console.log(JSON.parse(modifyObject.description));
       const result = await modifyFile(modifyObject, match.params.id);
       console.log(result);
       history.push('/Profile');
@@ -63,7 +65,7 @@ const Modify = ({history, match}) => {
 
   } =
       useModifyFileForm(doModify);
-  let mapLenght = undefined;
+  let mapLenght = 0;
   let description=undefined;
 
 
@@ -73,8 +75,21 @@ const Modify = ({history, match}) => {
         console.log(file);
         description = JSON.parse(file.description);
         mapLenght=Object.keys(description.coords).length;
-
         setInputs(() => {
+          if (description.coords==='') {
+            return {
+              title: file.title,
+              description: description.desc,
+              contact: description.contact,
+              coords: {lat: 0,
+                lng: 0,
+              },
+              file: file.file,
+
+            };
+          }
+          console.log(description);
+
           return {
             title: file.title,
             description: description.desc,
@@ -87,6 +102,7 @@ const Modify = ({history, match}) => {
       }
     })();
   }, [file, setInputs]);
+
 
   return (
 
@@ -173,7 +189,7 @@ const Modify = ({history, match}) => {
 
                   </Grid>
 
-                  { Object.keys(inputs.coords).length>0 &&
+                  {Object.keys(inputs.coords).length>0&&
                     <Grid
                       container
                       direction='column'

@@ -5,16 +5,22 @@ import BackButton from '../components/BackButton';
 import {Card, Grid, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {Map, TileLayer, Marker} from 'react-leaflet';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import CommentIcon from '@material-ui/icons/Comment';
 
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles((theme) => ({
+  card: {
+    margin: '3em',
+  },
   text: {
     padding: '1em',
     width: '60vw',
 
   },
   desc: {
+    padding: '1em',
     width: '60vw',
 
   },
@@ -29,11 +35,12 @@ const SingleFile = ({history, match}) => {
   const file = useSingleMedia(match.params.id);
   let description = undefined;
   let mapLenght = undefined;
+
   if (file !== null) {
     description = JSON.parse(file.description);
     mapLenght=Object.keys(description.coords).length;
     console.log(description);
-
+    console.log(mapLenght);
   }
   return (
 
@@ -46,7 +53,7 @@ const SingleFile = ({history, match}) => {
           justify="center"
           alignItems="center"
         >
-          <Card>
+          <Card className={classes.card}>
             <img
               className={classes.img}
               src={baseUrl + file.thumbnails.w640}
@@ -60,14 +67,28 @@ const SingleFile = ({history, match}) => {
               <Typography
                 className={classes.text}
                 variant='h2' component='h2'>{file.title}</Typography>
-              <Typography
-                className={classes.text}
-                variant='body1' >Contact information:
-                {description.contact}</Typography>
-              <Typography
-                className={classes.desc}
-                variant="body1"
-                component="p">Description:</Typography>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center">
+                <ContactMailIcon/>
+                <Typography
+                  className={classes.text}
+                  variant='body1' >
+                Contact :
+                  {description.contact}</Typography>
+              </Grid>
+              <Grid container
+                direction="row"
+                justify="center"
+                alignItems="center">
+                <CommentIcon/>
+                <Typography
+                  className={classes.desc}
+                  variant="body1"
+                  component="p">Description:</Typography>
+              </Grid>
               <Typography
                 className={classes.text}
                 variant="body1"
@@ -86,6 +107,7 @@ const SingleFile = ({history, match}) => {
               <Map
                 center={[description.coords.lat, description.coords.lng]}
                 zoom={15}>
+
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

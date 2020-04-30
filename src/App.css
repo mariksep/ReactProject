@@ -1,8 +1,7 @@
 .MuiAvatar-fallback {
   display: none !important;
 }
-
 .leaflet-container {
   height: 400px;
-  width: 400px;
+  width: 100%;
 }
