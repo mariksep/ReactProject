@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import useLoginForm from '../hooks/LoginHooks';
-import {login} from '../hooks/ApiHooks';
-import {MediaContext} from '../contexts/MediaContext';
-import {withRouter} from 'react-router-dom';
-import {TextField, Button, Grid} from '@material-ui/core/';
-import {makeStyles} from '@material-ui/core/styles';
+import { login } from '../hooks/ApiHooks';
+import { MediaContext } from '../contexts/MediaContext';
+import { withRouter } from 'react-router-dom';
+import { TextField, Button, Grid } from '@material-ui/core/';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
@@ -13,15 +13,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     width: '60vw',
   },
-
-
 }));
 
-const LoginForm =({history}) => {
+const LoginForm = ({ history }) => {
   const classes = useStyles();
 
   const [user, setUser] = useContext(MediaContext);
-  const doLogin = async () =>{
+  const doLogin = async () => {
     try {
       // hakee käyttäjän tiedot Apihooksista
       const userData = await login(inputs);
@@ -37,16 +35,14 @@ const LoginForm =({history}) => {
     }
   };
 
-  const {inputs, handlesubmit,
-    handleInputChange} = useLoginForm(doLogin);
+  const { inputs, handlesubmit, handleInputChange } = useLoginForm(doLogin);
   return (
-
     <Grid
       container
-      direction="column"
-      justify="space-around"
-      alignItems="center">
-
+      direction='column'
+      justify='space-around'
+      alignItems='center'
+    >
       <Grid item>
         <div>
           <h1>Login</h1>
@@ -57,9 +53,9 @@ const LoginForm =({history}) => {
         <form onSubmit={handlesubmit}>
           <Grid
             container
-            direction="column"
-            justify="space-between"
-            alignItems="center"
+            direction='column'
+            justify='space-between'
+            alignItems='center'
           >
             <Grid item>
               <TextField
@@ -67,7 +63,7 @@ const LoginForm =({history}) => {
                 onChange={handleInputChange}
                 type='text'
                 name='username'
-                placeholder="username"
+                placeholder='username'
                 value={inputs.username}
               />
             </Grid>
@@ -77,22 +73,19 @@ const LoginForm =({history}) => {
                 onChange={handleInputChange}
                 type='password'
                 name='password'
-                placeholder="password"
+                placeholder='password'
                 value={inputs.password}
-
               />
             </Grid>
             <Grid item>
-              <Button
-                variant="outlined" size="large"
-                type="submit" >Login</Button>
+              <Button variant='outlined' size='large' type='submit'>
+                Login
+              </Button>
             </Grid>
           </Grid>
         </form>
       </Grid>
     </Grid>
-
-
   );
 };
 LoginForm.propTypes = {

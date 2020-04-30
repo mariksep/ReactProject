@@ -18,6 +18,7 @@ import useUploadForm from '../hooks/UploadHooks';
 import { uploadFile } from '../hooks/ApiHooks';
 import { makeStyles } from '@material-ui/core/styles';
 import { Map, TileLayer, Marker } from 'react-leaflet';
+import Nav from '../components/Nav';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     fontWeight: 'normal',
-    margin: '1rem 0 3rem 0',
+    margin: '3rem 0 3rem 0',
     textAlign: 'center',
   },
   inputs: {
@@ -154,7 +155,7 @@ const Upload = ({ history }) => {
 
   return (
     <div className={classes.root}>
-      <BackButton />
+      <Nav />
       <Grid
         container
         direction='column'
@@ -218,7 +219,7 @@ const Upload = ({ history }) => {
                   onChange={handleInputChange}
                   validators={[
                     'required',
-                    'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
+                    "matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.'!?@ -]*$",
                   ]}
                   errorMessages={['Type title for your task']}
                 />
@@ -230,7 +231,7 @@ const Upload = ({ history }) => {
                   name='description'
                   value={inputs.description}
                   onChange={handleInputChange}
-                  validators={['matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$']}
+                  validators={["matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.'!?@ -]*$"]}
                   errorMessages={[
                     'Special characters are not allowed. Text only!',
                   ]}

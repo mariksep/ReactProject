@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
   cardContainer: {
     width: '30vw',
-    margin: '1rem',
+    margin: '1rem 1rem 3rem 1rem',
     '@media (max-width:950px)': {
       width: '50vw',
     },
