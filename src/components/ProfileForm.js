@@ -107,7 +107,7 @@ const ProfileForm = ({history}) => {
           container
         >
           <Button
-            fullWidth
+
             startIcon={<ArrowBackIcon />}
             onClick={reload}>Back</Button>
         </Grid>

@@ -17,17 +17,22 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CommentIcon from '@material-ui/icons/Comment';
 
 const useStyles = makeStyles((theme) => ({
-  map: {
+
+  'map': {
     borderRadius: '15px',
     margin: '0.5rem',
   },
-  inputs: {
-    padding: '1em',
-    width: '60vw',
-    textAlign: 'center',
+  'inputs': {
+    'padding': '1em',
+    'width': '60vw',
+    'textAlign':
+        'center',
+    '& label.Mui-focused': {
+      color: '#442C2E',
+    },
 
   },
-  helpper: {
+  'helpper': {
     padding: ' 1.5em',
 
   },

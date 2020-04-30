@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     '@media (max-width:780px)': {
       width: '90vw',
     },
+    '& label.Mui-focused': {
+      color: '#442C2E',
+    },
   },
   radio: {
     marginBottom: '1rem',
@@ -316,7 +319,6 @@ const Upload = ({history}) => {
               <Grid item xs={12}>
                 <Button
                   fullWidth
-                  color='primary'
                   type='submit'
                   className={classes.uploadBtn}
                 >
