@@ -7,6 +7,8 @@ import {useMediaByTag} from '../hooks/ApiHooks';
 import {Icon} from 'leaflet';
 import iconHelper from './settings_money_work-512.png';
 import iconWanted from './9-512.png';
+import CommentIcon from '@material-ui/icons/Comment';
+
 
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
@@ -14,6 +16,8 @@ const useStyles = makeStyles({
   map: {
     width: '95vw',
     height: '95vh',
+    borderRadius:'15px',
+    margin:'0.5rem',
   },
   popUpAvatar: {
     backgroundSize: 'cover',
@@ -35,6 +39,7 @@ const Media = () => {
   const HelperIcon = new Icon({
     iconUrl: iconHelper,
     iconSize: [50, 50],
+
   });
   const iconWantedIcon = new Icon({
     iconUrl: iconWanted,
@@ -126,9 +131,10 @@ const Media = () => {
                       component='h6'
                       variant='h6'
                     >{file.title}</Typography>
+                    <CommentIcon/>
                     <Typography
                       component='p'
-                      variant='body2'>{popupDesc}
+                      variant='body2'> {popupDesc}
                       <IconButton
                         aria-label={`info about ${file.title}`}
                         component={RouterLink}
@@ -187,6 +193,7 @@ const Media = () => {
                     component='h6'
                     variant='h6'
                   >{file.title}</Typography>
+                  <CommentIcon/>
                   <Typography
                     component='p'
                     variant='body2'>{popupDesc}

@@ -4,16 +4,21 @@ import useSignUpForm from '../hooks/RegisterHooks';
 import {checkUserAvailable, login, register} from '../hooks/ApiHooks';
 import {withRouter} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
-import {Button, Grid} from '@material-ui/core';
+import {Button, Grid, InputAdornment} from '@material-ui/core';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {makeStyles} from '@material-ui/core/styles';
-import {TextField} from './LoginForm';
+import LockIcon from '@material-ui/icons/Lock';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import FaceIcon from '@material-ui/icons/Face';
+
 
 const useStyles = makeStyles((theme) => ({
   inputs: {
     padding: '1em',
     textAlign: 'center',
-    width: '60vw',
+    width: '40vw',
+
   },
 
 
@@ -109,6 +114,13 @@ const RegisterForm = ({history}) => {
                   'minimum 3 charaters',
                   inputs.username + ' is not available',
                 ]}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonOutlineIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
 
@@ -124,6 +136,14 @@ const RegisterForm = ({history}) => {
                 errorMessages={[
                   'minimum length 5 characters',
                   'this field is required']}
+
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
 
@@ -137,6 +157,14 @@ const RegisterForm = ({history}) => {
                 value={inputs.confirm}
                 validators={['isPasswordMatch', 'required']}
                 errorMessages={['password mismatch', 'this field is required']}
+
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
 
@@ -150,6 +178,13 @@ const RegisterForm = ({history}) => {
                 value={inputs.email}
                 validators={['required', 'isEmail']}
                 errorMessages={['this field is required', 'email is not valid']}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AlternateEmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
 
@@ -165,8 +200,14 @@ const RegisterForm = ({history}) => {
                   ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
                 }
                 errorMessages={['text only']}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaceIcon />
+                    </InputAdornment>
+                  ),
+                }}
               />
-
 
 
               <Button

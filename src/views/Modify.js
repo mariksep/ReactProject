@@ -6,15 +6,21 @@ import {
   Grid,
   Typography,
   FormHelperText,
+  InputAdornment,
 } from '@material-ui/core/';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {modifyFile, useSingleMedia} from '../hooks/ApiHooks';
 import useModifyFileForm from '../hooks/ModifyFileHooks';
 import {makeStyles} from '@material-ui/core/styles';
 import {Map, TileLayer, Marker} from 'react-leaflet';
-
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import CommentIcon from '@material-ui/icons/Comment';
 
 const useStyles = makeStyles((theme) => ({
+  map: {
+    borderRadius: '15px',
+    margin: '0.5rem',
+  },
   inputs: {
     padding: '1em',
     width: '60vw',
@@ -123,7 +129,6 @@ const Modify = ({history, match}) => {
               >Modify you post</Typography>
               <FormHelperText
                 className={classes.helpper}
-
               >
       You can modify your post here:
               </FormHelperText>
@@ -168,6 +173,13 @@ const Modify = ({history, match}) => {
                         'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
                       ]}
                       errorMessages={['Text only, no special characters']}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <CommentIcon/>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                   </Grid>
                   <Grid item
@@ -185,6 +197,13 @@ const Modify = ({history, match}) => {
                         'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.!?@ -]*$',
                       ]}
                       errorMessages={['Type your contact-information']}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <ContactMailIcon/>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
 
                   </Grid>
@@ -199,6 +218,7 @@ const Modify = ({history, match}) => {
                       <Typography>The location</Typography>
 
                       <Map
+                        className={classes.map}
                         onClick={handleCoordsChange}
                         center={[inputs.coords.lat, inputs.coords.lng]}
                         zoom={15}>

@@ -30,6 +30,9 @@ const useStyles = makeStyles({
     height: 200,
     width: '100%',
   },
+  icon:{
+    color: '#442C2E',
+  },
 
 
 });
@@ -108,7 +111,7 @@ const Profile = ({history}) => {
 
           <Grid item>
 
-            <PersonOutlineIcon/>
+            <PersonOutlineIcon className={classes.icon}/>
             <Typography component='p'>Username: {user.username}
             </Typography>
 
@@ -116,14 +119,14 @@ const Profile = ({history}) => {
 
           <Grid item>
 
-            <AlternateEmailIcon/>
+            <AlternateEmailIcon className={classes.icon}/>
             <Typography component='p'>Email: {user.email}
             </Typography>
 
           </Grid>
           <Grid item>
 
-            <FaceIcon/>
+            <FaceIcon className={classes.icon}/>
             <Typography component='p'>Full name:
               {user.full_name}
             </Typography>

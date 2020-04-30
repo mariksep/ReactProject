@@ -48,10 +48,10 @@ const useStyles = makeStyles({
   },
 
   icon: {
-    color: 'black',
+    color: '#442C2E',
 
   },
-  iconContact: {
+  icons: {
     marginRight: '1em',
   },
   desc: {
@@ -90,13 +90,13 @@ const MyMediaFileRow =({file, index}) => {
           <Grid
             container
             direction="row">
-            <CommentIcon/>
+            <CommentIcon className={classes.icons}/>
             <Typography component='p'> {item.desc}</Typography>
           </Grid>
           <Grid
             container
             direction="row">
-            <ContactMailIcon className={classes.iconContact}/>
+            <ContactMailIcon className={classes.icons}/>
             <Typography component='p'>
             contact: {item.contact}</Typography>
           </Grid>

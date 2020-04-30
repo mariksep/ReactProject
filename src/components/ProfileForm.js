@@ -3,7 +3,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
-import {Button, Grid} from '@material-ui/core';
+import {Button, Grid, InputAdornment} from '@material-ui/core';
 import UploadProfilePic from '../views/UploadProfilePic';
 
 import {
@@ -13,8 +13,11 @@ import {
 } from '../hooks/ApiHooks';
 import useProfileForm from '../hooks/ProfileHooks';
 import {makeStyles} from '@material-ui/core/styles';
-import BackButton from './BackButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import FaceIcon from '@material-ui/icons/Face';
+import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -144,6 +147,13 @@ const ProfileForm = ({history}) => {
                   'minimum 3 charaters',
                   inputs.username + ' is not available',
                 ]}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonOutlineIcon/>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <TextValidator
@@ -157,6 +167,13 @@ const ProfileForm = ({history}) => {
                 validators={['isEmail']}
                 errorMessages={['this field is required',
                   'email is not valid']}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AlternateEmailIcon/>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <TextValidator
@@ -166,6 +183,13 @@ const ProfileForm = ({history}) => {
                 name='password'
                 placeholder='change password'
                 value={inputs.password||''}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon/>
+                    </InputAdornment>
+                  ),
+                }}
 
               />
 
@@ -181,6 +205,13 @@ const ProfileForm = ({history}) => {
                   ['matchRegexp:^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$']
                 }
                 errorMessages={['text only']}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FaceIcon/>
+                    </InputAdornment>
+                  ),
+                }}
 
               />
 
