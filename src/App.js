@@ -1,10 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Login, {Grid} from './views/Login';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './views/Login';
 import Media from './views/Media';
 import Upload from './views/Upload';
-import {MediaContext, MediaProvider} from './contexts/MediaContext';
+import { MediaProvider } from './contexts/MediaContext';
 import Helpers from './views/Helpers';
 import HelpWanted from './views/HelpWanted';
 import Profile from './views/Profile';
@@ -13,8 +13,7 @@ import SingleFile from './views/SingleFile';
 import Modify from './views/Modify';
 import Logout from './views/Logout';
 
-const App = ({history}) => {
-
+const App = ({ history }) => {
   return (
     <>
       <Router>

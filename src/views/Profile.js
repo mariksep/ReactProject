@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import BackButton from '../components/BackButton';
 import { MediaContext } from '../contexts/MediaContext';
 import { userInformation, getAvatarImage } from '../hooks/ApiHooks';
 import ProfileForm from '../components/ProfileForm';

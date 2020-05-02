@@ -1,21 +1,14 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Button,
-  Typography,
-  Grid,
-  IconButton,
-  Avatar,
-} from '@material-ui/core';
+import { Typography, Grid, IconButton, Avatar } from '@material-ui/core';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaByTag } from '../hooks/ApiHooks';
 import { Icon } from 'leaflet';
-import iconHelper from './settings_money_work-512.png';
-import iconWanted from './9-512.png';
+import iconHelper from '../assets/helper.png';
+import iconWanted from '../assets/job.png';
 import Nav from '../components/Nav';
 import CommentIcon from '@material-ui/icons/Comment';
-
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';

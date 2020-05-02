@@ -1,26 +1,24 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 
 const useModifyFileForm = (callback) => {
-  const [inputs, setInputs]=useState(
-      {
-        title: '',
-        description: '',
-        file: null,
-        dataUrl: '',
-        type: '',
-        contact: '',
-        coords: '',
-      },
-  );
-  const handleSubmit = (event) =>{
+  const [inputs, setInputs] = useState({
+    title: '',
+    description: '',
+    file: null,
+    dataUrl: '',
+    type: '',
+    contact: '',
+    coords: '',
+  });
+  const handleSubmit = (event) => {
     if (event) {
       event.preventDefault();
     }
     callback();
   };
-  const handleInputChange = (event)=>{
+  const handleInputChange = (event) => {
     event.persist();
-    setInputs((inputs)=>{
+    setInputs((inputs) => {
       return {
         ...inputs,
         [event.target.name]: event.target.value,
@@ -31,14 +29,10 @@ const useModifyFileForm = (callback) => {
     setInputs((inputs) => {
       return {
         ...inputs,
-        coords: {lat: event.latlng.lat,
-          lng: event.latlng.lng},
+        coords: { lat: event.latlng.lat, lng: event.latlng.lng },
       };
     });
   };
-
-
-
 
   return {
     inputs,
@@ -46,7 +40,6 @@ const useModifyFileForm = (callback) => {
     handleSubmit,
     handleInputChange,
     handleCoordsChange,
-
   };
 };
 
