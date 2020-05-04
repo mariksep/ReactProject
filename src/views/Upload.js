@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography,
@@ -12,13 +12,13 @@ import {
   Grid,
   CircularProgress,
 } from '@material-ui/core';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import useUploadForm from '../hooks/UploadHooks';
-import { uploadFile } from '../hooks/ApiHooks';
-import { makeStyles } from '@material-ui/core/styles';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import {uploadFile} from '../hooks/ApiHooks';
+import {makeStyles} from '@material-ui/core/styles';
+import {Map, TileLayer, Marker} from 'react-leaflet';
 import Nav from '../components/Nav';
-import { MediaContext } from '../contexts/MediaContext';
+import {MediaContext} from '../contexts/MediaContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   inputs: {
-    padding: '1rem',
-    textAlign: 'center',
-    width: '60vw',
+    'padding': '1rem',
+    'textAlign': 'center',
+    'width': '60vw',
     '@media (max-width:780px)': {
       width: '90vw',
     },
@@ -47,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.4rem',
   },
   uploadBtn: {
-    backgroundColor: '#3F51B5',
-    color: 'white',
-    marginTop: '2rem',
-    marginBottom: '4rem',
+    'backgroundColor': '#3F51B5',
+    'color': 'white',
+    'marginTop': '2rem',
+    'marginBottom': '4rem',
     '&:hover': {
       backgroundColor: 'white',
       color: '#3F51B5',
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Upload = ({ history }) => {
+const Upload = ({history}) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useContext(MediaContext);
@@ -132,17 +132,17 @@ const Upload = ({ history }) => {
     const reader = new FileReader();
 
     reader.addEventListener(
-      'load',
-      () => {
+        'load',
+        () => {
         // convert image file to base64 string
-        setInputs((inputs) => {
-          return {
-            ...inputs,
-            dataUrl: reader.result,
-          };
-        });
-      },
-      false
+          setInputs((inputs) => {
+            return {
+              ...inputs,
+              dataUrl: reader.result,
+            };
+          });
+        },
+        false,
     );
 
     if (inputs.file !== null) {
@@ -213,21 +213,21 @@ const Upload = ({ history }) => {
                     />
                   </RadioGroup>
                   <FormHelperText className={classes.textHelp}>
-                    Choose one
+                    Choose one*
                   </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='How can you help or where do you need help?'
+                  label='How can you help or where do you need help?*'
                   type='text'
                   name='title'
                   value={inputs.title}
                   onChange={handleInputChange}
                   validators={[
                     'required',
-                    "matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.'!?@ -]*$",
+                    'matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.\'!?@ -]*$',
                   ]}
                   errorMessages={['Type title for your task']}
                 />
@@ -235,11 +235,11 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='Provide a detailed description about your task'
+                  label='Provide a detailed description about your task*'
                   name='description'
                   value={inputs.description}
                   onChange={handleInputChange}
-                  validators={["matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.'!?@ -]*$"]}
+                  validators={['matchRegexp:^[a-zA-ZäöåÄÖÅ0-9,.\'!?@ -]*$']}
                   errorMessages={[
                     'Special characters are not allowed. Text only!',
                   ]}
@@ -248,7 +248,7 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='How people can contact you?'
+                  label='How people can contact you?*'
                   name='contact'
                   value={inputs.contact}
                   onChange={handleInputChange}
@@ -280,6 +280,7 @@ const Upload = ({ history }) => {
               )}
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
+                  helperText='add picture*'
                   type='file'
                   name='file'
                   accept='image/*,video/*,audio/*'
