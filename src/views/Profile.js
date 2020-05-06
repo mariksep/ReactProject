@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import BackButton from '../components/BackButton';
 import {MediaContext} from '../contexts/MediaContext';
 import {userInformation, getAvatarImage} from '../hooks/ApiHooks';
 import ProfileForm from '../components/ProfileForm';
-// eslint-disable-next-line max-len
 import {
   Card,
   Button,
@@ -109,14 +107,11 @@ const Profile = ({history}) => {
                   </Grid>
                   <Grid item>
                     <FaceIcon className={classes.icon} />
-                    <Typography component='p'>Full name: </Typography>
-                    {user.fullName != null &&
-                    <Typography component='p'>  { user.full_name}
-                    </Typography>
-                    }
-                    {user.fullName == null &&
-                  <Typography component='p' color='textSecondary'> no full name </Typography>
-                    }
+                    <Grid container>
+                      <Typography component='p'>Full name: </Typography>
+                      <Typography component='p'>  { user.full_name}
+                      </Typography>
+                    </Grid>
 
                   </Grid>
                 </Grid>

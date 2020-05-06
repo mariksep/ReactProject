@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useSingleMedia} from '../hooks/ApiHooks';
 import BackButton from '../components/BackButton';
-import {Card, Grid, Typography} from '@material-ui/core';
+import {
+  Button,
+  Card,
+
+  Grid,
+  Modal,
+  Typography,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {Map, TileLayer, Marker} from 'react-leaflet';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CommentIcon from '@material-ui/icons/Comment';
+import Comments from '../components/Comments';
+import {Icon} from 'leaflet';
+import MarkerIcon from '../assets/marker.png';
 
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
@@ -32,16 +42,24 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleFile = ({history, match}) => {
   const classes = useStyles();
+  const [show, setShow] = useState(false);
+  const markerIcon = new Icon({
+    iconUrl: MarkerIcon,
+    iconSize: [40, 40],
+  });
+
   const file = useSingleMedia(match.params.id);
+
   let description = undefined;
   let mapLenght = undefined;
 
   if (file !== null) {
     description = JSON.parse(file.description);
     mapLenght=Object.keys(description.coords).length;
-    console.log(description);
-    console.log(mapLenght);
   }
+  const showUpdate = () => {
+    setShow(!show);
+  };
   return (
 
     <>{file != null &&
@@ -77,8 +95,14 @@ const SingleFile = ({history, match}) => {
                   className={classes.text}
                   variant='body1' >
                 Contact :
-                  {description.contact}</Typography>
+                  {description.contact+ ' '} OR <br></br>
+                  <Button variant="outlined" onClick={showUpdate}>
+                      see comments
+                  </Button>
+
+                </Typography>
               </Grid>
+
               <Grid container
                 direction="row"
                 justify="center"
@@ -114,6 +138,7 @@ const SingleFile = ({history, match}) => {
                 />
 
                 <Marker
+                  icon={markerIcon}
                   position={[description.coords.lat, description.coords.lng]}
                 />
 
@@ -124,6 +149,9 @@ const SingleFile = ({history, match}) => {
             }
 
           </Card>
+          <Modal open={show}>
+            <Comments file={file}/>
+          </Modal>
         </Grid>
       </>
     }

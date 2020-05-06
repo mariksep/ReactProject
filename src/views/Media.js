@@ -1,22 +1,19 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import {
-  Button,
   Typography,
   Grid,
-  IconButton,
   Avatar,
+  Button,
 } from '@material-ui/core';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { makeStyles } from '@material-ui/core/styles';
-import { useMediaByTag } from '../hooks/ApiHooks';
-import { Icon } from 'leaflet';
-import iconHelper from './settings_money_work-512.png';
-import iconWanted from './9-512.png';
+import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
+import {makeStyles} from '@material-ui/core/styles';
+import {useMediaByTag} from '../hooks/ApiHooks';
+import {Icon} from 'leaflet';
+import iconHelper from '../assets/helper.png';
+import iconWanted from '../assets/job.png';
 import Nav from '../components/Nav';
 import CommentIcon from '@material-ui/icons/Comment';
-
-import ContactMailIcon from '@material-ui/icons/ContactMail';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -52,7 +49,7 @@ const Media = () => {
     iconUrl: iconWanted,
     iconSize: [50, 50],
   });
-  console.log(helper);
+
 
   return (
     <>
@@ -73,14 +70,16 @@ const Media = () => {
               if (file.avatar.length > 0) {
                 profilePicture = mediaUrl + file.avatar[profileIndex].filename;
               }
-
-              if (description.coords != null && description.coords != '') {
+              // eslint-disable-next-line max-len
+              if (description.coords !== null && description.coords !== '' && file !== null) {
                 return (
+
                   <Marker
                     icon={HelperIcon}
                     className={classes.helper}
                     key={file.file_id}
-                    position={[description.coords.lat, description.coords.lng]}
+                    position={[description.coords.lat,
+                      description.coords.lng]}
                   >
                     <Popup>
                       <Avatar
@@ -93,33 +92,28 @@ const Media = () => {
                       <Typography component='h5' variant='h5'>
                         {file.user.username}
                       </Typography>
-                      <Grid container direction='row' alignItems='center'>
-                        <ContactMailIcon />{' '}
-                        <Typography component='h5' variant='h5'>
-                          {' '}
-                          {description.contact}
-                        </Typography>
-                      </Grid>
                       <Typography component='h6' variant='h6'>
                         {file.title}
                       </Typography>
                       <CommentIcon />
                       <Typography component='p' variant='body2'>
-                        {' '}
-                        {popupDesc}
-                        <IconButton
+                        {popupDesc}  ...
+                        <Button
+
                           aria-label={`info about ${file.title}`}
                           component={RouterLink}
                           to={'/SingleFile/' + file.file_id}
-                        >
-                          ...
-                        </IconButton>
+                        >read more
+                        </Button>
                       </Typography>
                     </Popup>
+
                   </Marker>
+
+
                 );
               } else {
-                return console.log('');
+                return console.log();
               }
             })}
 
@@ -135,6 +129,7 @@ const Media = () => {
               const popupDesc = description.desc.slice(0, 60);
               if (description.coords != null && description.coords != '') {
                 return (
+
                   <Marker
                     icon={iconWantedIcon}
                     key={file.file_id}
@@ -151,35 +146,33 @@ const Media = () => {
                       <Typography component='h5' variant='h5'>
                         {file.user.username}
                       </Typography>
-                      <Grid container direction='row' alignItems='center'>
-                        <ContactMailIcon />{' '}
-                        <Typography component='h5' variant='h5'>
-                          {' '}
-                          {description.contact}
-                        </Typography>
-                      </Grid>
+
                       <Typography component='h6' variant='h6'>
                         {file.title}
                       </Typography>
                       <CommentIcon />
                       <Typography component='p' variant='body2'>
-                        {popupDesc}
-                        <IconButton
+                        {popupDesc}...
+                        <Button
+
                           aria-label={`info about ${file.title}`}
                           component={RouterLink}
                           to={'/SingleFile/' + file.file_id}
-                        >
-                          ...
-                        </IconButton>
+                        >  read more
+                        </Button>
                       </Typography>
                     </Popup>
                   </Marker>
+
                 );
               } else {
-                return console.log('');
+                return console.log();
               }
-            })}
+            })
+
+          }
         </Map>
+
       </Grid>
     </>
   );

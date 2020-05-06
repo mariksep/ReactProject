@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React from 'react';
 import {Card,
   Grid,
   IconButton,
@@ -19,7 +19,6 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CommentIcon from '@material-ui/icons/Comment';
 
 
-const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {
@@ -61,7 +60,6 @@ const useStyles = makeStyles({
 });
 
 const MyMediaFileRow =({file, index}) => {
-  console.log(file);
   const item = JSON.parse(file.description);
   const classes = useStyles();
   let cardmedia= 'http://placekitten.com/200/300';

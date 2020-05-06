@@ -1,5 +1,4 @@
 import React from 'react';
-import BackButton from '../components/BackButton';
 import { Typography, makeStyles } from '@material-ui/core';
 import MediaTable from '../components/MediaTable';
 import Nav from '../components/Nav';
@@ -23,7 +22,7 @@ const HelpWanted = () => {
         gutterBottom
         className={classes.header}
       >
-        HelpWanted
+        Help Wanted
       </Typography>
       <MediaTable type={'nhaneedhelp'} />
     </>

@@ -23,8 +23,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { useSingleMedia } from '../hooks/ApiHooks';
 import CloseIcon from '@material-ui/icons/Close';
+import JobIcon from '../assets/job.png';
+import HelperIcon from '../assets/helper.png';
+import MapIcon from '../assets/map.png';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     margin: '2rem 4rem',
+    borderBottom: '2px solid #FEEAE6',
   },
   drawerIcons: {
     fontSize: '2.7rem',
@@ -55,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '0.7rem',
   },
   appbar: {
-    background: 'transparent',
+    //background: 'transparent',
     boxShadow: 'none',
   },
   toolbar: {
@@ -96,6 +99,7 @@ const Nav = ({ history }) => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useContext(MediaContext);
   const [avatar, setAvatar] = useState([]);
+  const [headerColor, setHeaderColor] = useState('transparent');
 
   // Get user information and check token
   useEffect(() => {
@@ -126,27 +130,29 @@ const Nav = ({ history }) => {
     profilePicture = mediaUrl + avatar[profileIndex].filename;
   }
 
+  // Change the navbar color on scroll
+  const listenScrollEvent = () => {
+    window.scrollY > 10
+      ? setHeaderColor('#FED8D0')
+      : setHeaderColor('transparent');
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', listenScrollEvent);
+  });
+
   const toggleDrawer = (opener) => () => {
     setOpen(opener);
   };
 
-  // Get our own icons
-  const helpIcon = useSingleMedia(2045);
-  const jobIcon = useSingleMedia(2046);
-  let icons;
-
-  if (helpIcon && jobIcon) {
-    icons = {
-      helpIcon: helpIcon.thumbnails.w160,
-      jobIcon: jobIcon.thumbnails.w160,
-    };
-  }
-
   return (
     <>
-      {icons !== undefined && (
+      {user !== null && (
         <>
-          <AppBar className={classes.appbar}>
+          <AppBar
+            className={classes.appbar}
+            style={{ backgroundColor: headerColor }}
+          >
             <Toolbar className={classes.toolbar}>
               <IconButton
                 edge='start'
@@ -202,7 +208,7 @@ const Nav = ({ history }) => {
               >
                 <div
                   style={{
-                    backgroundImage: `url(${mediaUrl}${icons.helpIcon})`,
+                    backgroundImage: `url(${HelperIcon})`,
                   }}
                   className={classes.icon}
                 ></div>
@@ -212,7 +218,6 @@ const Nav = ({ history }) => {
                   className={classes.drawerText}
                 />
               </ListItem>
-
               <ListItem
                 button
                 component={RouterLink}
@@ -222,12 +227,31 @@ const Nav = ({ history }) => {
               >
                 <div
                   style={{
-                    backgroundImage: `url(${mediaUrl}${icons.jobIcon})`,
+                    backgroundImage: `url(${JobIcon})`,
                   }}
                   className={`${classes.icon}`}
                 ></div>
                 <ListItemText
                   primary='Help Wanted'
+                  disableTypography={true}
+                  className={classes.drawerText}
+                />
+              </ListItem>
+              <ListItem
+                button
+                component={RouterLink}
+                onClick={toggleDrawer(false)}
+                to='/media'
+                className={classes.picIcons}
+              >
+                <div
+                  style={{
+                    backgroundImage: `url(${MapIcon})`,
+                  }}
+                  className={classes.icon}
+                ></div>
+                <ListItemText
+                  primary='Tasks on the map'
                   disableTypography={true}
                   className={classes.drawerText}
                 />

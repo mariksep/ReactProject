@@ -1,19 +1,17 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
-const useProfileForm = (callback) => {
+const useCommentForm = (callback) => {
   const [inputs, setInputs] = useState({
-    username: '',
-    password: '',
-    email: '',
-    full_name: '',
+    file_id: '',
+    comment: '',
   });
-  const handleSubmitProfile = (event) => {
+  const handleSubmitComment = (event) => {
     if (event) {
       event.preventDefault();
     }
     callback();
   };
-  const handleInputChangeProfile = (event) => {
+  const handleInputChangeComment = (event) => {
     event.persist();
     setInputs((inputs) => {
       return {
@@ -24,11 +22,11 @@ const useProfileForm = (callback) => {
   };
 
   return {
-    handleSubmitProfile,
+    handleSubmitComment,
     inputs,
     setInputs,
-    handleInputChangeProfile,
+    handleInputChangeComment,
   };
 };
 
-export default useProfileForm;
+export default useCommentForm;
