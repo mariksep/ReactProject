@@ -13,6 +13,8 @@ import {
 import ContactIcon from '../assets/contact.png';
 import JobIcon from '../assets/job.png';
 import HelperIcon from '../assets/helper.png';
+import { Link as RouterLink } from 'react-router-dom';
+import StarIcon from '@material-ui/icons/Star';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -20,6 +22,9 @@ const useStyles = makeStyles(() => ({
   media: {
     height: 200,
     width: '100%',
+    '&:hover': {
+      opacity: '50%',
+    },
   },
   cardContainer: {
     width: '30vw',
@@ -37,20 +42,25 @@ const useStyles = makeStyles(() => ({
   cardHeader: {
     padding: '0.5rem',
     textAlign: 'center',
+    fontFamily: 'Rubik, sans-serif',
+    fontSize: '1.5rem',
   },
   icon: {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
-    width: '2.7rem',
-    height: '2.7rem',
+    width: '2.5rem',
+    height: '2.5rem',
   },
   description: {
-    margin: '1rem',
+    margin: '0 3rem 0 5rem',
+    fontSize: '0.9rem',
   },
   subheader: {
-    color: '#6b6b6b',
-    fontSize: '1rem',
+    color: '#442C2E',
+    fontSize: '0.9rem',
+    margin: '0.5rem',
+    borderBottom: '1px solid rgb(254, 216, 208)',
   },
   avatar: {
     backgroundSize: 'cover',
@@ -58,6 +68,23 @@ const useStyles = makeStyles(() => ({
     backgroundPosition: 'center',
     width: '3rem',
     height: '3rem',
+  },
+  starIconYellow: {
+    color: '#e2e232',
+    fontSize: '1.2rem',
+    marginRight: '0.1rem',
+  },
+  starIconGrey: {
+    color: '#cccccc',
+    fontSize: '1.2rem',
+    marginRight: '0.1rem',
+  },
+  ratingContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '1rem',
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '0.9rem',
   },
 }));
 
@@ -76,6 +103,36 @@ const MediaRow = ({ file, type }) => {
     profilePicture = mediaUrl + file.avatar[profileIndex].filename;
   }
 
+  // Show average rating as stars
+  let averageRating = 0;
+  let stars = [];
+
+  const displayStars = (averageRating) => {
+    if (averageRating > 0) {
+      for (let i = 0; i < averageRating; i++) {
+        const key = 'y' + file.file_id.toString() + i;
+        stars.push(<StarIcon className={classes.starIconYellow} key={key} />);
+      }
+    }
+
+    if (5 - averageRating > 0) {
+      for (let i = 0; i < 5 - averageRating; i++) {
+        const key = 'g' + file.file_id.toString() + i;
+        stars.push(<StarIcon className={classes.starIconGrey} key={key} />);
+      }
+    }
+  };
+
+  if (file.rating.length > 0) {
+    for (const rate of file.rating) {
+      averageRating += rate.rating;
+    }
+    averageRating = Math.round(averageRating / file.rating.length);
+    displayStars(averageRating);
+  } else {
+    displayStars(0);
+  }
+
   return (
     <>
       <Card className={classes.cardContainer}>
@@ -88,6 +145,11 @@ const MediaRow = ({ file, type }) => {
               }}
               className={classes.avatar}
             ></Avatar>
+          }
+          action={
+            <div className={classes.ratingContainer}>
+              {stars}( {file.rating.length} )
+            </div>
           }
           title={file.user.username}
           subheader={file.user.full_name}
@@ -105,6 +167,8 @@ const MediaRow = ({ file, type }) => {
             className={classes.media}
             image={thumb}
             title={file.title}
+            component={RouterLink}
+            to={'/SingleFile/' + file.file_id}
           />
           <div
             style={{
@@ -160,14 +224,25 @@ const MediaRow = ({ file, type }) => {
             <div
               style={{
                 backgroundImage: `url(${ContactIcon})`,
-                margin: '0.3rem',
+                margin: '0.3rem 0.7rem',
               }}
               className={classes.icon}
             ></div>
-            <Typography variant='body1' component='h4'>
-              {description.contact}
+            <Typography
+              variant='h6'
+              component='h3'
+              className={classes.subheader}
+            >
+              How to contact
             </Typography>
           </CardActions>
+          <Typography
+            variant='body1'
+            component='h4'
+            className={classes.description}
+          >
+            {description.contact}
+          </Typography>
         </CardContent>
       </Card>
     </>

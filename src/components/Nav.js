@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '0.7rem',
   },
   appbar: {
-    //background: 'transparent',
     boxShadow: 'none',
   },
   toolbar: {
@@ -132,7 +131,7 @@ const Nav = ({ history }) => {
 
   // Change the navbar color on scroll
   const listenScrollEvent = () => {
-    window.scrollY > 10
+    window.scrollY > 100
       ? setHeaderColor('#FED8D0')
       : setHeaderColor('transparent');
   };

@@ -7,8 +7,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 const useStyles = makeStyles((theme) => ({
   backbutton: {
     position: 'absolute',
-    top: '10%',
-    left: '8%',
+    top: '5%',
+    left: '3%',
   },
 }));
 

@@ -1,20 +1,69 @@
 .MuiAvatar-fallback {
   display: none !important;
 }
-.MuiInput-underline:after{
 
-  border-bottom-color: #442C2E!important ;
+.MuiInput-underline:after {
+  border-bottom-color: #442c2e !important ;
 }
 
 .leaflet-container {
   height: 400px;
   width: 100%;
-
-
-
 }
 
-body{
-  font-family: 'Rubik', sans-serif!important;
-  background-color: #FEEAE6;
+body {
+  font-family: 'Rubik', sans-serif !important;
+  background-color: #feeae6;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.modal {
+  z-index: 100;
+  background: white;
+  position: relative;
+  top: 15%;
+  margin: 1.75rem auto;
+  border-radius: 3px;
+  max-width: 500px;
+  padding: 2rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-close-button {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-close-button:hover {
+  opacity: 0.3;
 }

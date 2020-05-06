@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -43,11 +43,16 @@ const useSingleMedia = (id) => {
     const response = await fetch(baseUrl + 'media/' + fileid);
     const item = await response.json();
     const userResponse = await getUser(
-        item.user_id,
-        localStorage.getItem('token'),
+      item.user_id,
+      localStorage.getItem('token')
     );
     item.user = userResponse;
-    console.log(item);
+    // Lisää ratingit
+    const ratingInfo = await getRatings(
+      item.file_id,
+      localStorage.getItem('token')
+    );
+    item.rating = ratingInfo;
     setData(item);
   };
   useEffect(() => {
@@ -91,7 +96,7 @@ const uploadFile = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return {json, tagJson};
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -134,6 +139,22 @@ const userInformation = async (token) => {
   }
 };
 
+const getRatings = async (id, token) => {
+  const fetchOptions = {
+    headers: {
+      'x-access-token': token,
+    },
+  };
+  try {
+    const response = await fetch(baseUrl + 'ratings/file/' + id, fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ':' + json.error);
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 const useMediaByTag = (tag) => {
   const [data, setData] = useState([]);
   const fetchUrl = async (tag) => {
@@ -142,22 +163,30 @@ const useMediaByTag = (tag) => {
     const json = await response.json();
     // Haetaan yksittäiset kuvat, jotta saadaan thumbnailit
     const items = await Promise.all(
-        json.map(async (item) => {
-          const response = await fetch(baseUrl + 'media/' + item.file_id);
-          // Lisää käyttäjän tiedot ja avatar
-          const itemi = await response.json();
-          const userResponse = await getUser(
-              itemi.user_id,
-              localStorage.getItem('token'),
-          );
-          itemi.user = userResponse;
-          const avatarFile = await getAvatarImage(
-              itemi.user_id,
-              localStorage.getItem('token'),
-          );
-          itemi.avatar = avatarFile;
-          return await itemi;
-        }),
+      json.map(async (item) => {
+        const response = await fetch(baseUrl + 'media/' + item.file_id);
+        // Lisää käyttäjän tiedot
+        const itemi = await response.json();
+        const userResponse = await getUser(
+          itemi.user_id,
+          localStorage.getItem('token')
+        );
+        itemi.user = userResponse;
+        // Lisää käyttäjän avatar
+        const avatarFile = await getAvatarImage(
+          itemi.user_id,
+          localStorage.getItem('token')
+        );
+        itemi.avatar = avatarFile;
+        // Lisää ratingit
+        const ratingInfo = await getRatings(
+          itemi.file_id,
+          localStorage.getItem('token')
+        );
+        itemi.rating = ratingInfo;
+
+        return await itemi;
+      })
     );
     setData(items);
   };
@@ -204,7 +233,6 @@ const getAvatarImage = async (id) => {
 };
 
 const uploadProfilePic = async (inputs, tag) => {
-  console.log(inputs, tag);
   const fd = new FormData();
   fd.append('title', '');
   fd.append('description', '');
@@ -223,7 +251,7 @@ const uploadProfilePic = async (inputs, tag) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ': ' + json.error);
     const tagJson = addTag(json.file_id, tag);
-    return {json, tagJson};
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -264,6 +292,45 @@ const deleteFile = async (id) => {
   }
 };
 
+const addRating = async (inputs) => {
+  const fetchOptionsRating = {
+    method: 'POST',
+    body: JSON.stringify({
+      file_id: inputs.file_id,
+      rating: inputs.rating,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('token'),
+    },
+  };
+
+  try {
+    const ratingResponse = await fetch(baseUrl + 'ratings', fetchOptionsRating);
+    const json = await ratingResponse.json();
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const deleteRating = async (id) => {
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('token'),
+    },
+  };
+  try {
+    const response = await fetch(baseUrl + 'ratings/file/' + id, fetchOptions);
+    const json = response.json();
+    if (!response.ok) throw new Error(json.message + json.error);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 export {
   useSingleMedia,
   login,
@@ -278,4 +345,7 @@ export {
   uploadProfilePic,
   modifyFile,
   deleteFile,
+  getRatings,
+  addRating,
+  deleteRating,
 };

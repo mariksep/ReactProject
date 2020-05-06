@@ -44,14 +44,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.4rem',
   },
   uploadBtn: {
-    backgroundColor: '#3F51B5',
+    backgroundColor: '#0000008a',
     color: 'white',
     marginTop: '2rem',
     marginBottom: '4rem',
     '&:hover': {
       backgroundColor: 'white',
-      color: '#3F51B5',
-      border: '1px solid #3F51B5',
+      color: '#0000008a',
+      border: '1px solid #0000008a',
     },
   },
   map: {
@@ -256,11 +256,6 @@ const Upload = ({ history }) => {
                   errorMessages={['Type your contact-information']}
                 />
               </Grid>
-              {loading && (
-                <Grid item className={classes.preview}>
-                  <CircularProgress />
-                </Grid>
-              )}
               {inputs.dataUrl.length > 0 && (
                 <Grid item xs={12} className={classes.preview}>
                   <div
@@ -310,14 +305,13 @@ const Upload = ({ history }) => {
                   )}
                 </Map>
               </Grid>
-
+              {loading && (
+                <Grid item className={classes.preview}>
+                  <CircularProgress />
+                </Grid>
+              )}
               <Grid item xs={12}>
-                <Button
-                  fullWidth
-                  color='primary'
-                  type='submit'
-                  className={classes.uploadBtn}
-                >
+                <Button fullWidth type='submit' className={classes.uploadBtn}>
                   Upload
                 </Button>
               </Grid>

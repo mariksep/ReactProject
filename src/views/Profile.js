@@ -33,6 +33,10 @@ const useStyles = makeStyles({
       width: '90vw',
     },
   },
+  header: {
+    marginBottom: '3rem',
+    marginTop: '4rem',
+  },
   profilePic: {
     height: 200,
     width: '100%',
@@ -78,7 +82,7 @@ const Profile = ({ history }) => {
     <>
       <Nav />
       <Grid container justify='center'>
-        <Typography component='h1' variant='h2'>
+        <Typography component='h1' variant='h2' className={classes.header}>
           Profile
         </Typography>
       </Grid>

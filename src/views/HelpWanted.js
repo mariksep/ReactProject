@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   header: {
     textAlign: 'center',
     marginBottom: '4rem',
-    marginTop: '3rem',
+    marginTop: '4rem',
   },
 }));
 
