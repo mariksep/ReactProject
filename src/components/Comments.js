@@ -134,8 +134,8 @@ const Comments = ({file}) => {
       return comment;
     };
     checkComments();
-  }, [setUser, setcomment]);
-  // comments
+  }, [setUser, setcomment, comments]);
+
 
 
   const reload = () =>{
