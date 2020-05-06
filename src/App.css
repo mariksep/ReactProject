@@ -67,3 +67,7 @@ body {
 .modal-close-button:hover {
   opacity: 0.3;
 }
+
+.leaflet-container a {
+  color: black !important;
+}

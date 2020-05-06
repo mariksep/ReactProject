@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     '@media (max-width:780px)': {
       width: '90vw',
     },
+    '& label.Mui-focused': {
+      color: '#442C2E',
+    },
   },
   radio: {
     marginBottom: '1rem',
@@ -70,6 +73,15 @@ const useStyles = makeStyles((theme) => ({
     color: 'red',
     fontSize: '1rem',
     fontWeight: 'bold',
+  },
+  headContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  guide: {
+    fontFamily: 'Roboto, sans-serif',
+    marginBottom: '2rem',
   },
 }));
 
@@ -167,7 +179,7 @@ const Upload = ({ history }) => {
         justify='space-around'
         alignItems='center'
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.headContainer}>
           <Typography
             component='h1'
             variant='h2'
@@ -175,6 +187,14 @@ const Upload = ({ history }) => {
             gutterBottom
           >
             Add new task
+          </Typography>
+          <Typography
+            component='p'
+            variant='body2'
+            gutterBottom
+            className={classes.guide}
+          >
+            All starred ( * ) fields are required
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -210,14 +230,14 @@ const Upload = ({ history }) => {
                     />
                   </RadioGroup>
                   <FormHelperText className={classes.textHelp}>
-                    Choose one
+                    Choose one *
                   </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='How can you help or where do you need help?'
+                  label='How can you help or where do you need help? *'
                   type='text'
                   name='title'
                   value={inputs.title}
@@ -232,7 +252,7 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='Provide a detailed description about your task'
+                  label='Provide a detailed description about your task *'
                   name='description'
                   value={inputs.description}
                   onChange={handleInputChange}
@@ -245,7 +265,7 @@ const Upload = ({ history }) => {
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
                   fullWidth
-                  label='How people can contact you?'
+                  label='How people can contact you? *'
                   name='contact'
                   value={inputs.contact}
                   onChange={handleInputChange}
@@ -272,6 +292,7 @@ const Upload = ({ history }) => {
               )}
               <Grid item xs={12} className={classes.inputs}>
                 <TextValidator
+                  helperText='add picture *'
                   type='file'
                   name='file'
                   accept='image/*,video/*,audio/*'

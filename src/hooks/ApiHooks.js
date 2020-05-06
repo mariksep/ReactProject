@@ -125,6 +125,7 @@ const addTag = async (file_id, tag) => {
 
 const userInformation = async (token) => {
   const fetchOptions = {
+    method: 'GET',
     headers: {
       'x-access-token': token,
     },
@@ -150,6 +151,81 @@ const getRatings = async (id, token) => {
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ':' + json.error);
     return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const useFileComments = (id) => {
+  const [data, setData] = useState([]);
+  const fetchUrl = async (id) => {
+    const response = await fetch(baseUrl + 'comments/file/' + id);
+    const json = await response.json();
+    const items = await Promise.all(
+      json.map(async (item) => {
+        // Lisää käyttäjän tiedot ja avatar
+        const userResponse = await getUser(
+          item.user_id,
+          localStorage.getItem('token')
+        );
+        item.user = userResponse;
+        const avatarFile = await getAvatarImage(
+          item.user_id,
+          localStorage.getItem('token')
+        );
+        item.avatar = avatarFile;
+        return await item;
+      })
+    );
+    setData(items);
+  };
+
+  useEffect(() => {
+    fetchUrl(id);
+  }, [id]);
+
+  return data;
+};
+
+const FileComments = async (id) => {
+  const response = await fetch(baseUrl + 'comments/file/' + id);
+  let palautus;
+  const json = await response.json();
+  const items = await Promise.all(
+    json.map(async (item) => {
+      // Lisää käyttäjän tiedot ja avatar
+      const userResponse = await getUser(
+        item.user_id,
+        localStorage.getItem('token')
+      );
+      item.user = userResponse;
+      const avatarFile = await getAvatarImage(item.user_id);
+      item.avatar = avatarFile;
+      return await item;
+    })
+  );
+  palautus = items;
+  return palautus;
+};
+
+const addComment = async (file_id, comment) => {
+  const fetchOptionsComment = {
+    method: 'POST',
+    body: JSON.stringify({
+      file_id: file_id,
+      comment: comment,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('token'),
+    },
+  };
+  console.log(fetchOptionsComment.body);
+
+  try {
+    const Response = await fetch(baseUrl + 'comments', fetchOptionsComment);
+    console.log(Response);
+    await Response.json();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -348,4 +424,7 @@ export {
   getRatings,
   addRating,
   deleteRating,
+  useFileComments,
+  addComment,
+  FileComments,
 };

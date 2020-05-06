@@ -1,15 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { Grid, Typography } from '@material-ui/core';
-import { useMediaByTag, userInformation } from '../hooks/ApiHooks';
-import { MediaContext } from '../contexts/MediaContext';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useContext, useEffect} from 'react';
+import {Grid, Typography} from '@material-ui/core';
+import {useMediaByTag, userInformation} from '../hooks/ApiHooks';
+import {MediaContext} from '../contexts/MediaContext';
 
 import MyMediaFileRow from './MyMediaFileRow';
 
-const useStyles = makeStyles({});
+
 
 const MyMediaRow = () => {
-  const classes = useStyles();
+
 
   const [user, setUser] = useContext(MediaContext);
   useEffect(() => {
@@ -26,7 +25,7 @@ const MyMediaRow = () => {
 
   const helperMyRow = helper.filter((item) => item.user_id === user.user_id);
   const needhelpMyRow = needhelp.filter(
-    (item) => item.user_id === user.user_id
+      (item) => item.user_id === user.user_id,
   );
 
   return (
@@ -49,13 +48,13 @@ const MyMediaRow = () => {
             {helperMyRow.length > 0 &&
               helperMyRow.map((file, index) => {
                 return (
-                  <>
-                    <MyMediaFileRow
-                      key={file.file_id}
-                      file={file}
-                      index={index}
-                    />
-                  </>
+
+                  <MyMediaFileRow
+                    key={file.file_id}
+                    file={file}
+                    index={index}
+                  />
+
                 );
               })}
           </>
@@ -69,13 +68,11 @@ const MyMediaRow = () => {
           {needhelpMyRow.length > 0 &&
             needhelpMyRow.map((file, index) => {
               return (
-                <>
-                  <MyMediaFileRow
-                    key={file.file_id}
-                    file={file}
-                    index={index}
-                  />
-                </>
+                <MyMediaFileRow
+                  key={file.file_id}
+                  file={file}
+                  index={index}
+                />
               );
             })}
         </Grid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSingleMedia, userInformation } from '../hooks/ApiHooks';
 import BackButton from '../components/BackButton';
@@ -10,6 +10,9 @@ import CommentIcon from '@material-ui/icons/Comment';
 import RateTaskForm from '../components/RateTaskForm';
 import { MediaContext } from '../contexts/MediaContext';
 import StarIcon from '@material-ui/icons/Star';
+import Comments from '../components/Comments';
+import { Icon } from 'leaflet';
+import MarkerIcon from '../assets/marker.png';
 
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
@@ -43,7 +46,14 @@ const useStyles = makeStyles((theme) => ({
 const SingleFile = ({ history, match }) => {
   const classes = useStyles();
   const [user, setUser] = useContext(MediaContext);
+  const [show, setShow] = useState(false);
+  const markerIcon = new Icon({
+    iconUrl: MarkerIcon,
+    iconSize: [40, 40],
+  });
+
   const file = useSingleMedia(match.params.id);
+
   let description = undefined;
   let mapLenght = undefined;
   let alreadyRated = {
@@ -71,7 +81,6 @@ const SingleFile = ({ history, match }) => {
         if (rate.user_id === user.user_id) {
           alreadyRated.rated = true;
           alreadyRated.rate = rate.rating;
-          console.log('on jo');
         }
       }
     }
@@ -82,6 +91,10 @@ const SingleFile = ({ history, match }) => {
     mapLenght = Object.keys(description.coords).length;
     checkRating(file);
   }
+
+  const showUpdate = () => {
+    setShow(!show);
+  };
 
   const [isShowing, setIsShowing] = useState(false);
 
@@ -142,7 +155,10 @@ const SingleFile = ({ history, match }) => {
                 >
                   <ContactMailIcon />
                   <Typography className={classes.text} variant='body1'>
-                    Contact :{description.contact}
+                    Contact :{description.contact + ' '} OR <br></br>
+                    <Button variant='outlined' onClick={showUpdate}>
+                      See comments
+                    </Button>
                   </Typography>
                 </Grid>
                 <Grid
@@ -194,6 +210,9 @@ const SingleFile = ({ history, match }) => {
                 </Grid>
               )}
             </Card>
+            <Modal open={show}>
+              <Comments file={file} />
+            </Modal>
           </Grid>
         </>
       )}

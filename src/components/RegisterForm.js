@@ -101,7 +101,7 @@ const RegisterForm = ({history}) => {
 
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="Username*"
                 onChange={handleInputChange}
                 value={inputs.username}
                 validators={[
@@ -129,7 +129,7 @@ const RegisterForm = ({history}) => {
 
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Password*"
                 onChange={handleInputChange}
                 value={inputs.password}
                 validators={['minStringLength:5', 'required']}
@@ -140,7 +140,7 @@ const RegisterForm = ({history}) => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockIcon />
+                      <LockIcon/>
                     </InputAdornment>
                   ),
                 }}
@@ -152,7 +152,7 @@ const RegisterForm = ({history}) => {
 
                 type="password"
                 name="confirm"
-                placeholder="Confirm password"
+                placeholder="Confirm password*"
                 onChange={handleInputChange}
                 value={inputs.confirm}
                 validators={['isPasswordMatch', 'required']}
@@ -173,7 +173,7 @@ const RegisterForm = ({history}) => {
 
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder="Email*"
                 onChange={handleInputChange}
                 value={inputs.email}
                 validators={['required', 'isEmail']}
@@ -203,7 +203,7 @@ const RegisterForm = ({history}) => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FaceIcon />
+                      <FaceIcon  />
                     </InputAdornment>
                   ),
                 }}

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
-import { Button, Typography, FormGroup, Switch } from '@material-ui/core/';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Grid } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography, FormGroup, Switch} from '@material-ui/core/';
+import {Grid} from '@material-ui/core/';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {

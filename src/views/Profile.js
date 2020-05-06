@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import { MediaContext } from '../contexts/MediaContext';
-import { userInformation, getAvatarImage } from '../hooks/ApiHooks';
+import {MediaContext} from '../contexts/MediaContext';
+import {userInformation, getAvatarImage} from '../hooks/ApiHooks';
 import ProfileForm from '../components/ProfileForm';
-// eslint-disable-next-line max-len
 import {
   Card,
   Button,
@@ -13,7 +12,7 @@ import {
   CardContent,
   CardMedia,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import MyMediaRow from '../components/MyMediaRow';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -23,9 +22,9 @@ import Nav from '../components/Nav';
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {
-    width: '30vw',
-    height: '50%',
-    margin: '1rem',
+    'width': '30vw',
+    'height': '50%',
+    'margin': '1rem',
     '@media (max-width:950px)': {
       width: '50vw',
     },
@@ -46,7 +45,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Profile = ({ history }) => {
+const Profile = ({history}) => {
   const classes = useStyles();
   const [user, setUser] = useContext(MediaContext);
   const [avatar, setAvatar] = useState([]);
@@ -112,10 +111,12 @@ const Profile = ({ history }) => {
                   </Grid>
                   <Grid item>
                     <FaceIcon className={classes.icon} />
-                    <Typography component='p'>
-                      Full name:
-                      {user.full_name}
-                    </Typography>
+                    <Grid container>
+                      <Typography component='p'>Full name: </Typography>
+                      <Typography component='p'>  { user.full_name}
+                      </Typography>
+                    </Grid>
+
                   </Grid>
                 </Grid>
                 <Button fullWidth onClick={showUpdate}>

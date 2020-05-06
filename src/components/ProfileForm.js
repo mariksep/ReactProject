@@ -95,7 +95,7 @@ const ProfileForm = ({ history }) => {
     <Grid className={classes.container}>
       <Grid className={classes.modal}>
         <Grid container>
-          <Button fullWidth startIcon={<ArrowBackIcon />} onClick={reload}>
+          <Button startIcon={<ArrowBackIcon />} onClick={reload}>
             Back
           </Button>
         </Grid>
