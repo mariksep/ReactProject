@@ -136,8 +136,6 @@ const Comments = ({file}) => {
     checkComments();
   }, [setUser, setcomment, comments]);
 
-
-
   const reload = () =>{
     window.location.reload();
   };

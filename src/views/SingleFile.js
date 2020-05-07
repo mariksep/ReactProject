@@ -201,6 +201,7 @@ const SingleFile = ({ history, match }) => {
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     />
                     <Marker
+                        icon={markerIcon}
                       position={[
                         description.coords.lat,
                         description.coords.lng,
