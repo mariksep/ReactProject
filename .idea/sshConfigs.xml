@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig authType="PASSWORD" host="shell.metropolia.fi" id="5ff525f6-42bf-4c27-941b-df6e14263b20" port="22" nameFormat="DESCRIPTIVE" username="mariksep" />
-    </configs>
-  </component>
-</project>

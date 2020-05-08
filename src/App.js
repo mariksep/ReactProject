@@ -16,7 +16,7 @@ import Logout from './views/Logout';
 const App = ({ history }) => {
   return (
     <>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <MediaProvider>
           <Switch>
             <Route exact path='/' component={Login} />
