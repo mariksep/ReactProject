@@ -76,7 +76,8 @@ const Modify = ({history, match}) => {
 
   } =
       useModifyFileForm(doModify);
-  let mapLenght = 0;
+  // eslint-disable-next-line
+  let mapLenght=undefined;
   let description=undefined;
 
 

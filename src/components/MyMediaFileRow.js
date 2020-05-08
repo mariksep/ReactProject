@@ -18,7 +18,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CommentIcon from '@material-ui/icons/Comment';
 
-
 const baseUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 const useStyles = makeStyles({
   card: {

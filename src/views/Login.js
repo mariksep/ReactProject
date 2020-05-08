@@ -25,6 +25,7 @@ const Login = () => {
 
   return (
     <>
+      {/*  Etusivu jossa voi kirjautua sisssän tai rekisteröityä*/}
       <Grid
         container
         direction='column'
@@ -63,7 +64,7 @@ const Login = () => {
               </Grid>
             </Typography>
           </FormGroup>
-
+          {/* vaihtaa loginin ja rekisterin välillä riippuewn show arvosta */}
           {show ? <LoginForm /> : <RegisterForm />}
         </Grid>
       </Grid>
