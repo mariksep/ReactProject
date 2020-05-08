@@ -140,7 +140,6 @@ const Comments = ({file}) => {
     window.location.reload();
   };
 
-  console.log(comments);
   return (
     <Grid className={classes.container}>
       <Grid

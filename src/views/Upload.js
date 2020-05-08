@@ -19,6 +19,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import Nav from '../components/Nav';
 import { MediaContext } from '../contexts/MediaContext';
+import {Icon} from 'leaflet';
+import MarkerIcon from '../assets/marker.png';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,6 +92,11 @@ const Upload = ({ history }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useContext(MediaContext);
+  const markerIcon = new Icon({
+    iconUrl: MarkerIcon,
+    iconSize: [40, 40],
+  });
+
 
   const doUpload = async () => {
     setLoading(true);
@@ -322,7 +330,9 @@ const Upload = ({ history }) => {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   />
                   {inputs.coords.length !== 0 && (
-                    <Marker position={[inputs.coords.lat, inputs.coords.lng]} />
+                    <Marker
+                        icon={markerIcon}
+                        position={[inputs.coords.lat, inputs.coords.lng]} />
                   )}
                 </Map>
               </Grid>

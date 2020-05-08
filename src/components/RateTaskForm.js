@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 const RateTaskForm = ({ isShowing, hide, file, alreadyRated }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-  console.log('fileee', file);
   const doRating = async () => {
     setLoading(true);
 
