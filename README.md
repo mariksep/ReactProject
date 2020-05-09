@@ -6,6 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 School project react course</p>
 <p>
 A Neighbor Assistance app that allows you to request or find help in your area for a small fee. For people who need help, or who have a small need for pocket money.</p>
+<p>
+We used the school's own simple media sharing service backend
+  </p>
 <h3>Techniques</h3>
 <div>
 <ul>
@@ -51,6 +54,9 @@ This comes when you click on the map page popup read more button, helper and hel
     <img src="https://github.com/mariksep/ReactProject/blob/master/public/pictures/zoom.JPG" alt="zoom pic">
  </div>
   <div>
+    <h3>Rating modal</h3>
+    <img src="https://github.com/mariksep/ReactProject/blob/master/public/rate.JPG" alt="message page">
+ </div>
   <h3>Message modal from single page</h3>
     <img src="https://github.com/mariksep/ReactProject/blob/master/public/pictures/messages.JPG" alt="message page">
  </div>
