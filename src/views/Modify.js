@@ -15,6 +15,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Map, TileLayer, Marker} from 'react-leaflet';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import CommentIcon from '@material-ui/icons/Comment';
+import MarkerIcon from '../assets/marker.png';
+import {Icon} from 'leaflet';
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -44,6 +47,11 @@ const Modify = ({history, match}) => {
   const classes = useStyles();
 
   const file = useSingleMedia(match.params.id);
+  const markerIcon = new Icon({
+    iconUrl: MarkerIcon,
+    iconSize: [40, 40],
+  });
+
 
 
   const doModify = async () =>{
@@ -233,7 +241,8 @@ const Modify = ({history, match}) => {
                           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                         />
                         <Marker
-                          position={[inputs.coords.lat, inputs.coords.lng]}
+                            icon={markerIcon}
+                            position={[inputs.coords.lat, inputs.coords.lng]}
                         />
 
 
